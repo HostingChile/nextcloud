@@ -36,7 +36,7 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock:ro
         restart: unless-stopped
     
-    db:
+    database:
         image: mariadb
         container_name: nextcloud-database
         networks:
@@ -51,7 +51,7 @@ services:
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         restart: unless-stopped
   
-    app:
+    nextcloud:
         image: nextcloud:latest
         container_name: nextcloud-app
         networks:
@@ -68,14 +68,14 @@ services:
             - ./app/themes:/var/www/html/themes
             - /etc/localtime:/etc/localtime:ro
         environment:
-            - VIRTUAL_HOST=cloud.${DOMAIN:?You must set the DOMAIN}
-            - LETSENCRYPT_HOST=cloud.${DOMAIN:?You must set the DOMAIN}
+            - VIRTUAL_HOST=nextcloud.${DOMAIN:?You must set the DOMAIN}
+            - LETSENCRYPT_HOST=nextcloud.${DOMAIN:?You must set the DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL:?You must set the EMAIL}
         restart: unless-stopped
     
     collabora:
         image: collabora/code
-        container_name: nextcloud-collab
+        container_name: nextcloud-collabora
         networks:
             - nextcloud_network
         depends_on:
