@@ -1,0 +1,25 @@
+version: '3' 
+
+services:
+    collabora:
+        image: collabora/code
+        container_name: nextcloud-collabora
+        networks:
+            - nextcloud_network
+        depends_on:
+            - proxy
+            - letsencrypt
+        cap_add:
+            - MKNOD
+        ports:
+            - 9980:9980
+        environment:
+            - domain=nextcloud\\.${ESCAPED_DOMAIN}
+            - username=${COLLABORA_USERNAME:-admin}
+            - password=${COLLABORA_PASSWORD}
+            - VIRTUAL_PROTO=https
+            - VIRTUAL_PORT=443
+            - VIRTUAL_HOST=collabora.${DOMAIN}
+            - LETSENCRYPT_HOST=collabora.${DOMAIN}
+            - LETSENCRYPT_EMAIL=${EMAIL}
+        restart: unless-stopped 
