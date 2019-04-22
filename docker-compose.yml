@@ -13,10 +13,10 @@ services:
             - 80:80
             - 443:443
         volumes:
-            - ./proxy/conf.d:/etc/nginx/conf.d:rw
-            - ./proxy/vhost.d:/etc/nginx/vhost.d:rw
-            - ./proxy/html:/usr/share/nginx/html:rw
-            - ./proxy/certs:/etc/nginx/certs:ro
+            - proxy-conf:/etc/nginx/conf.d:rw
+            - proxy-vhost:/etc/nginx/vhost.d:rw
+            - proxy-html:/usr/share/nginx/html:rw
+            - proxy-certs:/etc/nginx/certs:ro
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
         restart: unless-stopped
@@ -29,9 +29,9 @@ services:
         networks:
             - nextcloud_network
         volumes:
-            - ./proxy/certs:/etc/nginx/certs:rw
-            - ./proxy/vhost.d:/etc/nginx/vhost.d:rw
-            - ./proxy/html:/usr/share/nginx/html:rw
+            - proxy-certs:/etc/nginx/certs:rw
+            - proxy-vhost:/etc/nginx/vhost.d:rw
+            - proxy-html:/usr/share/nginx/html:rw
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/var/run/docker.sock:ro
         restart: unless-stopped
@@ -62,10 +62,6 @@ services:
             - database
         volumes:
             - nextcloud:/var/www/html
-            - ./app/config:/var/www/html/config
-            - ./app/custom_apps:/var/www/html/custom_apps
-            - ./app/data:/var/www/html/data
-            - ./app/themes:/var/www/html/themes
             - /etc/localtime:/etc/localtime:ro
         environment:
             - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -102,6 +98,10 @@ services:
 volumes:
     nextcloud:
     db: 
+    proxy-conf:
+    proxy-vhost:
+    proxy-html:
+    proxy-certs:
   
 networks:
     nextcloud_network:
