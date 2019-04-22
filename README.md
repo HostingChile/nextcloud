@@ -1,7 +1,7 @@
 # Nextcloud en Hosting.cl
 - Se debe deshabilitar SELinux editando el archivo `/etc/selinux/config` y dejando `SELINUX=disabled`, luego reinciar el servidor.
 - Se debe habilitar la comuniación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.20.0.0/16 accept'`, luego reiniciar el firewall y luego reiniciar docker.
-- Se debe cambiar el dueño de la carpeta `app/` con el UID:GID 33:33
+- Se debe cambiar el dueño de la carpeta `app/` con el UID:GID 33:33 (Al parecer no, creo que al tener SELinux deshabilitado esto se hace solo)
   
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL https://collabora.dominio.tld en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
