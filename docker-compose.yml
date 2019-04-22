@@ -95,6 +95,20 @@ services:
             - LETSENCRYPT_HOST=collabora.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped 
+        
+    onlyoffice:
+        container_name: onlyoffice
+        image: onlyoffice/documentserver:latest
+        stdin_open: true
+        tty: true
+        networks:
+            - nextcloud_network
+        environment:
+           - VIRTUAL_HOST=onlyoffice.${DOMAIN}
+           - LETSENCRYPT_HOST=onlyoffice.${DOMAIN}
+           - LETSENCRYPT_EMAIL=${EMAIL}
+       restart: unless-stopped 
+        
 volumes:
     nextcloud:
     db: 
