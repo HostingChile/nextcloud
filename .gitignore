@@ -1,1 +1,4 @@
 .env
+app/
+only_office/
+proxy/
