@@ -46,8 +46,8 @@ services:
             - /etc/localtime:/etc/localtime:ro
         environment:
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-            - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
-            - MYSQL_USER=${MYSQL_USER:-nextcloud}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         restart: unless-stopped
   
@@ -68,9 +68,9 @@ services:
             - ./app/themes:/var/www/html/themes
             - /etc/localtime:/etc/localtime:ro
         environment:
-            - VIRTUAL_HOST=nextcloud.${DOMAIN:?You must set the DOMAIN}
-            - LETSENCRYPT_HOST=nextcloud.${DOMAIN:?You must set the DOMAIN}
-            - LETSENCRYPT_EMAIL=${EMAIL:?You must set the EMAIL}
+            - VIRTUAL_HOST=nextcloud.${DOMAIN}
+            - LETSENCRYPT_HOST=nextcloud.${DOMAIN}
+            - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped
     
     collabora:
@@ -86,14 +86,14 @@ services:
         ports:
             - 9980:9980
         environment:
-            - domain=nextcloud\\.${ESCAPED_DOMAIN:?You must set the ESCAPED_DOMAIN}
+            - domain=nextcloud\\.${ESCAPED_DOMAIN}
             - username=${COLLABORA_USERNAME:-admin}
             - password=${COLLABORA_PASSWORD}
             - VIRTUAL_PROTO=https
             - VIRTUAL_PORT=443
-            - VIRTUAL_HOST=collabora.${DOMAIN:?You must set the DOMAIN}
-            - LETSENCRYPT_HOST=collabora.${DOMAIN:?You must set the DOMAIN}
-            - LETSENCRYPT_EMAIL=${EMAIL:?You must set the EMAIL}
+            - VIRTUAL_HOST=collabora.${DOMAIN}
+            - LETSENCRYPT_HOST=collabora.${DOMAIN}
+            - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped 
 volumes:
     nextcloud:
