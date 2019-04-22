@@ -1,2 +1,5 @@
 - Se debe deshabilitar SElinux
-- Se debe cambiar el dueño de la carpeta app por 33:33
+- Se debe cambiar el dueño de las carpets:
+  - app/ 33:33
+  - proxy/ 1000:1000
+  - only_office/ 110:114
