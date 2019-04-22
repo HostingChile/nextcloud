@@ -1,0 +1,15 @@
+version: '3' 
+
+services:
+    onlyoffice:
+        container_name: onlyoffice
+        image: onlyoffice/documentserver:latest
+        stdin_open: true
+        tty: true
+        networks:
+            - nextcloud_network
+        environment:
+           - VIRTUAL_HOST=onlyoffice.${DOMAIN}
+           - LETSENCRYPT_HOST=onlyoffice.${DOMAIN}
+           - LETSENCRYPT_EMAIL=${EMAIL}
+       restart: unless-stopped 
