@@ -9,9 +9,11 @@
 - Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.20.0.0/16 accept'`, luego reiniciar el firewall y luego reiniciar docker con `systemctl restart firewalld && systemctl restart docker`.
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
-
 - **OBSOLETO**: Se debe cambiar el dueño de la carpeta `app/` con el UID:GID 33:33 (Al parecer no, creo que al tener SELinux deshabilitado esto se hace solo)
-  
+
+## Iniciar los servicios
+- Se inicia con, `docker-compose -f docker-compose.yml up -d` pero su se quiere agregar Collabora y/o OnlyOffice se deben agregar los parámetros `-f docker-compose.collabora.yml` y `-f docker-compose.onlyoffice.yml` respectivamente.
+
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL https://collabora.dominio.tld en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
   
