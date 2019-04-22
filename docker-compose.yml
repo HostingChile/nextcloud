@@ -68,6 +68,10 @@ services:
             - ./app/themes:/var/www/html/themes
             - /etc/localtime:/etc/localtime:ro
         environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_HOST=database
             - VIRTUAL_HOST=nextcloud.${DOMAIN}
             - LETSENCRYPT_HOST=nextcloud.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
