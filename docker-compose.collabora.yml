@@ -9,6 +9,8 @@ services:
         depends_on:
             - proxy
             - letsencrypt
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
         cap_add:
             - MKNOD
         environment:
