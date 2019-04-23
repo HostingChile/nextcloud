@@ -12,7 +12,7 @@ services:
             - proxy
             - letsencrypt
         environment:
-            - VIRTUAL_HOST=onlyoffice.${DOMAIN}
-            - LETSENCRYPT_HOST=onlyoffice.${DOMAIN}
+            - VIRTUAL_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
+            - LETSENCRYPT_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped 
