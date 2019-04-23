@@ -3,7 +3,7 @@ version: '3'
 services:
     proxy:
         image: jwilder/nginx-proxy:alpine
-        container_name: nextcloud-proxy
+        container_name: proxy
         labels:
             - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
         networks:
@@ -37,7 +37,7 @@ services:
     
     database:
         image: mariadb
-        container_name: nextcloud-database
+        container_name: database
         networks:
             - nextcloud_network
         volumes:
@@ -52,7 +52,7 @@ services:
   
     nextcloud:
         image: nextcloud:latest
-        container_name: nextcloud-app
+        container_name: nextcloud
         networks:
             - nextcloud_network
         depends_on:
@@ -79,7 +79,7 @@ services:
         
     redis:
         image: redis:alpine
-        container_name: nextcloud-redis
+        container_name: redis
         restart: unless-stopped
         
 volumes:
