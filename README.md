@@ -12,7 +12,7 @@
 - **OBSOLETO**: Se debe cambiar el dueño de la carpeta `app/` con el UID:GID 33:33 (Al parecer no, creo que al tener SELinux deshabilitado esto se hace solo)
 
 ## Iniciar los servicios
-- Se inicia con, `docker-compose -f docker-compose.yml up -d` pero su se quiere agregar Collabora y/o OnlyOffice se deben agregar los parámetros `-f docker-compose.collabora.yml` y `-f docker-compose.onlyoffice.yml` respectivamente.
+- Se inicia con `docker-compose -f docker-compose.yml [-f docker-compose.collabora.yml] [-f docker-compose.onlyoffice.yml] up -d` según si se quiere agregar Collabora y/o OnlyOffice.
 
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL https://collabora.dominio.tld en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
