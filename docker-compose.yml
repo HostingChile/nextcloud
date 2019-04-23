@@ -18,7 +18,6 @@ services:
             - proxy-certs:/etc/nginx/certs:ro
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
-            - nextcloud:/var/www/html
         restart: unless-stopped
   
     letsencrypt:
