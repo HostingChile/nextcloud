@@ -11,6 +11,8 @@ services:
         depends_on:
             - proxy
             - letsencrypt
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
         environment:
             - VIRTUAL_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
