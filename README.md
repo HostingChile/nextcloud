@@ -11,20 +11,22 @@
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
 
 ## Iniciar los servicios
-- Se inicia con `docker-compose -f docker-compose.yml [-f docker-compose.collabora.yml] [-f docker-compose.onlyoffice.yml] up -d` según si se quiere agregar Collabora y/o OnlyOffice.
+- Ejecutar `docker-compose -f docker-compose.yml [-f docker-compose.collabora.yml] [-f docker-compose.onlyoffice.yml] up -d` según si se quiere agregar Collabora y/o OnlyOffice.
+
+Luego se puede ingresar a https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
 
 ## Habilitar Collabora
-Luego de instalar la app, se debe usar la URL https://collabora.dominio.tld en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
+Luego de instalar la app, se debe usar la URL https://<COLLABORA_SUBDOMAIN>.<DOMAIN> en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
 
-Para comprobar si está ejecutándose se puede ingresar a https://collabora.dominio.tld/loleaflet/dist/admin/admin.html
+Para comprobar si está ejecutándose se puede ingresar a https://<COLLABORA_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin/admin.html
   
 ## Habilitar OnlyOffice
 Luego de instalar la app, se debe usar la siguiente configuración (habilitar configuración avanzada):
-  - *Document Editing Service address*: https://onlyoffice.dominio.tld
-  - *Document Editing Service address for internal requests from the server*: https://onlyoffice.dominio.tld
-  - *Server address for internal requests from the Document Editing Service*: https://nextcloud.dominio.tld
+  - *Document Editing Service address*: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
+  - *Document Editing Service address for internal requests from the server*: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
+  - *Server address for internal requests from the Document Editing Service*: https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
   
-Para comprobar si está ejecutándose se puede ingresar a https://onlyoffice.dominio.tld
+Para comprobar si está ejecutándose se puede ingresar a https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
   
 ## Errores comunes
 1. Al entrar al sitio aparece como no seguro. Luego al ver el certificado en el navegador dice emitido por y para *letsencrypt-nginx-proxy-companion*.
@@ -32,5 +34,5 @@ Para comprobar si está ejecutándose se puede ingresar a https://onlyoffice.dom
   - Aun esta trabajando en eso. Puede tardar unos 5 minutos.
   - El subdominio nextcloud.dominio.tld aun no responde públicamente a la IP del servidor.
   - Se ha alcanzado el límite de certificados gratuitos posibles para emitir por Let's Encrypt (https://letsencrypt.org/docs/rate-limits/). 
-2. **502 Bad Gateway**.
+2. **502 Bad Gateway**
 Alguno de los servicios aún no arranca, hay que esperar unos 5 minutos. En caso de persistir el problema se deben ver los logs.
