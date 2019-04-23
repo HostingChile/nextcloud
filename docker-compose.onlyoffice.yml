@@ -6,6 +6,9 @@ services:
         tty: true
         networks:
             - nextcloud_network
+        depends_on:
+            - proxy
+            - letsencrypt
         environment:
            - VIRTUAL_HOST=onlyoffice.${DOMAIN}
            - LETSENCRYPT_HOST=onlyoffice.${DOMAIN}
