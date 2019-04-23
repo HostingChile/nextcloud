@@ -9,8 +9,6 @@ services:
             - letsencrypt
         cap_add:
             - MKNOD
-        ports:
-            - 9980:9980
         environment:
             - domain=nextcloud\\.${ESCAPED_DOMAIN}
             - username=${COLLABORA_USERNAME:-admin}
