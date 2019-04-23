@@ -22,7 +22,7 @@ services:
   
     letsencrypt:
         image: jrcs/letsencrypt-nginx-proxy-companion
-        container_name: nextcloud-letsencrypt
+        container_name: letsencrypt
         depends_on:
             - proxy
         networks:
