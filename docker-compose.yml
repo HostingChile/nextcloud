@@ -51,7 +51,7 @@ services:
         restart: unless-stopped
   
     nextcloud:
-        image: nextcloud:latest
+        image: nextcloud:fpm
         container_name: nextcloud
         networks:
             - network
