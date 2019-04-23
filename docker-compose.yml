@@ -59,6 +59,7 @@ services:
             - letsencrypt
             - proxy
             - database
+            - redis
         volumes:
             - nextcloud:/var/www/html
             - /etc/localtime:/etc/localtime:ro
@@ -70,9 +71,14 @@ services:
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_HOST=database
             - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+            - REDIS_HOST=redis
             - VIRTUAL_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
+        restart: unless-stopped
+        
+    redis:
+        image: redis:alpine
         restart: unless-stopped
         
 volumes:
