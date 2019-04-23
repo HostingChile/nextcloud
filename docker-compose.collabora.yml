@@ -5,7 +5,7 @@ services:
         image: collabora/code
         container_name: collabora
         networks:
-            - nextcloud_network
+            - network
         depends_on:
             - proxy
             - letsencrypt
