@@ -3,9 +3,9 @@ version: '3'
 services:
     proxy:
         image: jwilder/nginx-proxy:alpine
+        container_name: nextcloud-proxy
         labels:
             - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
-        container_name: nextcloud-proxy
         networks:
             - nextcloud_network
         ports:
@@ -79,6 +79,7 @@ services:
         
     redis:
         image: redis:alpine
+        container_name: nextcloud-redis
         restart: unless-stopped
         
 volumes:
