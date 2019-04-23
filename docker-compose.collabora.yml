@@ -3,7 +3,7 @@ version: '3'
 services:
     collabora:
         image: collabora/code
-        container_name: nextcloud-collabora
+        container_name: collabora
         networks:
             - nextcloud_network
         depends_on:
