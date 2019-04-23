@@ -15,12 +15,16 @@
 
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL https://collabora.dominio.tld en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
+
+Para comprobar si está ejecutándose se puede ingresar a https://collabora.dominio.tld/loleaflet/dist/admin/admin.html
   
 ## Habilitar OnlyOffice
 Luego de instalar la app, se debe usar la siguiente configuración (habilitar configuración avanzada):
   - *Document Editing Service address*: https://onlyoffice.dominio.tld
   - *Document Editing Service address for internal requests from the server*: https://onlyoffice.dominio.tld
   - *Server address for internal requests from the Document Editing Service*: https://nextcloud.dominio.tld
+  
+Para comprobar si está ejecutándose se puede ingresar a https://onlyoffice.dominio.tld
   
 ## Errores comunes
 1. Al entrar al sitio aparece como no seguro. Luego al ver el certificado en el navegador dice emitido por y para *letsencrypt-nginx-proxy-companion*.
