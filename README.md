@@ -19,12 +19,12 @@ Luego de instalar la app, se debe usar la URL https://collabora.dominio.tld en l
   
 ## Habilitar OnlyOffice
 Luego de instalar la app, se debe usar la siguiente configuración (habilitar configuración avanzada):
-  - Document Editing Service address: https://onlyoffice.dominio.tld
-  - Document Editing Service address for internal requests from the server: https://onlyoffice.dominio.tld
-  - Server address for internal requests from the Document Editing Service: https://nextcloud.dominio.tld
+  - *Document Editing Service address*: https://onlyoffice.dominio.tld
+  - *Document Editing Service address for internal requests from the server*: https://onlyoffice.dominio.tld
+  - *Server address for internal requests from the Document Editing Service*: https://nextcloud.dominio.tld
   
 ## Errores comunes
-1. Al entrar al sitio aparece com no seguro. Luego al ver el certificado en el navegador dice emitido por y para letsencrypt-nginx-proxy-companion.
+1. Al entrar al sitio aparece como no seguro. Luego al ver el certificado en el navegador dice emitido por y para *letsencrypt-nginx-proxy-companion*.
   Esto ocurre porque el servicio que provee los ceritificados aun no lo ha emitido. Posibles razones:
   - Aun esta trabajando en eso. Puede tardar unos 5 minutos.
   - El subdominio nextcloud.dominio.tld aun no responde públicamente a la IP del servidor.
