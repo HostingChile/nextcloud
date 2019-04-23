@@ -33,6 +33,7 @@ services:
             - proxy-html:/usr/share/nginx/html:rw
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/var/run/docker.sock:ro
+            - nextcloud:/var/www/html
         restart: unless-stopped
     
     database:
