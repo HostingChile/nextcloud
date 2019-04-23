@@ -7,7 +7,7 @@ services:
         stdin_open: true
         tty: true
         networks:
-            - nextcloud_network
+            - network
         depends_on:
             - proxy
             - letsencrypt
