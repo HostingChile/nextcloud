@@ -32,5 +32,5 @@ Para comprobar si está ejecutándose se puede ingresar a https://onlyoffice.dom
   - Aun esta trabajando en eso. Puede tardar unos 5 minutos.
   - El subdominio nextcloud.dominio.tld aun no responde públicamente a la IP del servidor.
   - Se ha alcanzado el límite de certificados gratuitos posibles para emitir por Let's Encrypt (https://letsencrypt.org/docs/rate-limits/). 
-2. Al entrar a https://collabora.dominio.tld/ aparece **502 Bad Gateway**.
-  Es muy probable que sea que el servicio de Collabora aun no termina de arrancar. Puede tardar unos 5 - 10 minutos. También puede pasar con los otros servicios, pero estos generalmente tardan menos en arrancar.
+2. **502 Bad Gateway**.
+Alguno de los servicios aún no arranca, hay que esperar unos 5 minutos. En caso de persistir el problema se deben ver los logs.
