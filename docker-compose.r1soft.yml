@@ -1,0 +1,12 @@
+version: '3' 
+
+services:
+    r1soft:
+        image: centos7
+        container_name: r1soft
+        networks:
+            - network
+        volumes:
+            - nextcloud:/backup
+            - /etc/localtime:/etc/localtime:ro
+        restart: unless-stopped 
