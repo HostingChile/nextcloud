@@ -86,6 +86,7 @@ services:
         
     cron:
         image: voidpointer/nextcloud-cronjob
+        container_name: cron
         network_mode: none
         depends_on:
             - nextcloud
