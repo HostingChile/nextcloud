@@ -85,17 +85,14 @@ services:
         restart: unless-stopped
         
     cron:
-        image: voidpointer/nextcloud-cronjob
+        image: nextcloud:apache
         container_name: cron
-        network_mode: none
-        depends_on:
-            - nextcloud
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - NEXTCLOUD_CONTAINER_NAME=nextcloud
-            - NEXTCLOUD_PROJECT_NAME=nextcloud
+          - nextcloud:/var/www/html
+        entrypoint: /cron.sh
+        depends_on:
+          - database
+          - redis
         restart: unless-stopped
         
 volumes:
