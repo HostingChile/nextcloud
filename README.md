@@ -14,6 +14,9 @@
 - Ejecutar `docker-compose -f docker-compose.yml [-f docker-compose.collabora.yml] [-f docker-compose.onlyoffice.yml] up -d` según si se quiere agregar Collabora y/o OnlyOffice.
 
 Luego se puede ingresar a https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
+  
+## Tareas recomendadas
+- Una vez que Nextcloud este corriendo y conectado a la base de datos, se recomienda ejecutar `docker exec --user www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el sistema.
 
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL https://<COLLABORA_SUBDOMAIN>.<DOMAIN> en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
