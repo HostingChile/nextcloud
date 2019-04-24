@@ -28,6 +28,12 @@ Luego de instalar la app, se debe usar la siguiente configuración (habilitar co
   
 Para comprobar si está ejecutándose se puede ingresar a https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
   
+## Usar certificado propio
+- Eliminar la variables de entorno `LETSENCRYPT_*` del archivo .
+- Copiar en `/var/lib/docker/volumes/nextcloud_proxy-certs/_data/` los archivos .crt y .key que componen el certificado. El nombre de estos archivos debe ser exactamente igual al nombre del `VIRTUAL_HOST` del servicio, terminado con .crt y .key
+
+Con esto el contendor proxy generará el virtualhost correspondiente para que use el certificado.
+  
 ## Errores comunes
 1. Al entrar al sitio aparece como no seguro. Luego al ver el certificado en el navegador dice emitido por y para *letsencrypt-nginx-proxy-companion*.
   Esto ocurre porque el servicio que provee los ceritificados aun no lo ha emitido. Posibles razones:
