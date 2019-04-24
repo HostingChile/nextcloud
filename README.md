@@ -10,13 +10,10 @@
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
 
-## Iniciar los servicios
-- Ejecutar `docker-compose -f docker-compose.yml [-f docker-compose.collabora.yml] [-f docker-compose.onlyoffice.yml] up -d` según si se quiere agregar Collabora y/o OnlyOffice.
+- Ejecutar `docker-compose -f docker-compose.yml [-f docker-compose.collabora.yml] [-f docker-compose.onlyoffice.yml] up -d` según si se quiere agregar Collabora y/o OnlyOffice. Luego se puede ingresar a https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
 
-Luego se puede ingresar a https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
-  
-## Tareas recomendadas
-- Una vez que Nextcloud este corriendo y conectado a la base de datos, se recomienda ejecutar `docker exec --user www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el sistema.
+- Ejecutar `docker exec --user www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema.
+- Cambiar le modo de ejecución de los trabajos en segundo plano. Se debe dejar el modo *cron* con el comando `docker-compose exec -u www-data nextcloud php occ background:cron`
 
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL https://<COLLABORA_SUBDOMAIN>.<DOMAIN> en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
