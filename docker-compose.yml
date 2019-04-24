@@ -97,6 +97,16 @@ services:
             - redis
         restart: unless-stopped
         
+    mail:
+       image: elsdoerfer/exim-sender
+       container_name: mail
+       networks:
+            - network
+       environment:
+            - ALLOWED_HOSTS=nextcloud
+            - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+       restart: unless-stopped
+        
 volumes:
     nextcloud:
     db: 
