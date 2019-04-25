@@ -37,6 +37,14 @@ Luego de instalar la app, se debe usar la siguiente configuración (habilitar co
   
 Para comprobar si está ejecutándose se puede ingresar a https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
   
+## Usar servidor de correo integrado
+Si se usa el archivo ``docker-compose.mail.yml` el sistema tendrá un servidor de correos integrado. Para usarlo se debe usar la siguiente configuración:
+  - **Send mode**: SMTP
+  - **Encrytpion**: None
+  - **From address**: <ELEGIR_NOMBRE>@<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
+  - **Authentication** method: None
+  - **Server address**: mail : 25
+  
 ## Usar certificado propio
 - Eliminar la variables de entorno `LETSENCRYPT_*` del archivo .
 - Copiar en `/var/lib/docker/volumes/nextcloud_proxy-certs/_data/` los archivos .crt y .key que componen el certificado. El nombre de estos archivos debe ser exactamente igual al nombre del `VIRTUAL_HOST` del servicio, terminado con .crt y .key
