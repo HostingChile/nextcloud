@@ -20,7 +20,7 @@
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
 
-- Ejecutar `docker-compose up -d`. Luego se puede ingresar a https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>. Cuando ya muestre la página de manera correcta se puede continuar y ejecutar los comandos:
+- Ejecutar `docker-compose up -d`. Luego se puede ingresar a `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`. Cuando ya muestre la página de manera correcta se puede continuar y ejecutar los comandos:
   - `docker-compose exec --user www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema
   - `docker-compose exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
 
@@ -31,9 +31,9 @@ Para comprobar si está ejecutándose se puede ingresar a `https://<COLLABORA_SU
   
 ## Habilitar OnlyOffice
 Luego de instalar la app, se debe usar la siguiente configuración (habilitar configuración avanzada):
-  - **Document Editing Service address**: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
-  - **Document Editing Service address for internal requests from the server**: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
-  - **Server address for internal requests from the Document Editing Service**: https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
+  - **Document Editing Service address**: `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
+  - **Document Editing Service address for internal requests from the server**: `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
+  - **Server address for internal requests from the Document Editing Service**: `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`
   
 Para comprobar si está ejecutándose se puede ingresar a `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
   
@@ -41,7 +41,7 @@ Para comprobar si está ejecutándose se puede ingresar a `https://<ONLYOFFICE_S
 Si se usa el archivo ``docker-compose.mail.yml` el sistema tendrá un servidor de correos integrado. Para usarlo se debe usar la siguiente configuración:
   - **Send mode**: SMTP
   - **Encrytpion**: None
-  - **From address**: <ELEGIR_NOMBRE>@<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
+  - **From address**: `<ELEGIR_NOMBRE>@<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`
   - **Authentication** method: None
   - **Server address**: mail : 25
   
