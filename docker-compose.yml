@@ -18,6 +18,7 @@ services:
             - proxy-certs:/etc/nginx/certs:ro
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
+            - ${PWD}/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
         restart: unless-stopped
   
     letsencrypt:
