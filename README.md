@@ -7,6 +7,15 @@
 - Habilitar el servicio de Docker para que se ejecute la reiniciar el servidor `systemctl enable docker` 
 - Descargar el repositorio con `git clone https://github.com/tikoflano/nextcloud.git /home/nextcloud`
 - Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.20.0.0/16 accept'`, luego reiniciar el firewall y luego reiniciar docker con `systemctl restart firewalld && systemctl restart docker`.
+- Para facilitar la ejecución de los comandos de docker-compose es mejor editar el archivo `~/.bash_profile` y agregar las siguientes variables de entorno:
+  ```
+  COMPOSE_PROJECT_NAME=nextcloud
+  COMPOSE_FILE=/home/nextcloud/docker-compose.yml:[AGREGAR LOS OTROS ARCHIVOS docker-compose QUE SE USARÁN]
+  
+  export COMPOSE_PROJECT_NAME
+  export COMPOSE_FILE
+  ```
+  Luego se debe ejecutar `source ~/.bash_profile` para que tome las variables
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
 
