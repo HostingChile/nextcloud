@@ -3,7 +3,9 @@
 ## Instalación
 - Instalar Vim, Git y Docker con `yum install -y vim git docker`
 - Instalar Docker Compose con `curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose`
-- Dejar SELinux en modo permisivo.. Primero temporalmente con `setenforce 0` y luego editando el archivo `vim /etc/selinux/config` y dejando `SELINUX=permissive` para mantener los cambios al reinicar el servidor.
+- Dejar SELinux en modo permisivo:
+  - Ejecutar `setenforce 0`. Este cambio se pierde al reiniciar el servidor, por lo que es necesario el paso siguiente.
+  - Editar el archivo `vim /etc/selinux/config` y dejando `SELINUX=permissive` para mantener los cambios al reiniciar el servidor. Este cambio lo toma solo al reiniciar el servidor, por lo que es necesario el paso anterior.
 - Habilitar el servicio de Docker para que se ejecute la reiniciar el servidor `systemctl enable docker` 
 - Descargar el repositorio con `git clone https://github.com/tikoflano/nextcloud.git /home/nextcloud`
 - Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.20.0.0/16 accept'`, luego reiniciar el firewall y docker con `systemctl restart firewalld && systemctl restart docker`.
