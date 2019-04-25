@@ -25,9 +25,9 @@
   - `docker-compose exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
 
 ## Habilitar Collabora
-Luego de instalar la app, se debe usar la URL https://<COLLABORA_SUBDOMAIN>.<DOMAIN> en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
+Luego de instalar la app, se debe usar la URL `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>` en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
 
-Para comprobar si está ejecutándose se puede ingresar a https://<COLLABORA_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin/admin.html
+Para comprobar si está ejecutándose se puede ingresar a `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin/admin.html`
   
 ## Habilitar OnlyOffice
 Luego de instalar la app, se debe usar la siguiente configuración (habilitar configuración avanzada):
@@ -35,7 +35,7 @@ Luego de instalar la app, se debe usar la siguiente configuración (habilitar co
   - **Document Editing Service address for internal requests from the server**: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
   - **Server address for internal requests from the Document Editing Service**: https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
   
-Para comprobar si está ejecutándose se puede ingresar a https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
+Para comprobar si está ejecutándose se puede ingresar a `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
   
 ## Usar servidor de correo integrado
 Si se usa el archivo ``docker-compose.mail.yml` el sistema tendrá un servidor de correos integrado. Para usarlo se debe usar la siguiente configuración:
