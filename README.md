@@ -16,13 +16,13 @@
   export COMPOSE_FILE
   ```
   Luego se debe ejecutar `source ~/.bash_profile` para que tome las variables
+- **Opcional**: Ejecutar `docker-compose pull` para que baje las imágenes a usar. Útil para la creación de plantillas de VM.
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
 
-- Ejecutar `docker-compose -f docker-compose.yml [-f docker-compose.collabora.yml] [-f docker-compose.onlyoffice.yml] up -d` según si se quiere agregar Collabora y/o OnlyOffice. Luego se puede ingresar a https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
-
-- Ejecutar `docker exec --user www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema.
-- Cambiar le modo de ejecución de los trabajos en segundo plano. Se debe dejar el modo *cron* con el comando `docker-compose exec -u www-data nextcloud php occ background:cron`
+- Ejecutar `docker-compose up -d`. Luego se puede ingresar a https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>. Cuando ya muestre la página de manera correcta se puede continuar y ejecutar los comandos:
+  - `docker exec --user www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema
+  - `docker exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
 
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL https://<COLLABORA_SUBDOMAIN>.<DOMAIN> en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
