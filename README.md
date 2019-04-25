@@ -15,7 +15,9 @@
   export COMPOSE_PROJECT_NAME
   export COMPOSE_FILE
   ```
-  Luego se debe ejecutar `source ~/.bash_profile` para que tome las variables
+  Luego se debe ejecutar `source ~/.bash_profile` para que tome las variables.
+- **Opcional**: Agregar un alias a docker-compose en el archivo `~/.bashrc` con `alias dc='docker-compose'` y luego ejecutar `source ~/.bash_profile` para que tome los cambios.
+
 - **Opcional**: Ejecutar `docker-compose pull` para que baje las imágenes a usar. Útil para la creación de plantillas de VM.
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
