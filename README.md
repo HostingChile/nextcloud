@@ -31,9 +31,9 @@ Para comprobar si está ejecutándose se puede ingresar a https://<COLLABORA_SUB
   
 ## Habilitar OnlyOffice
 Luego de instalar la app, se debe usar la siguiente configuración (habilitar configuración avanzada):
-  - *Document Editing Service address*: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
-  - *Document Editing Service address for internal requests from the server*: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
-  - *Server address for internal requests from the Document Editing Service*: https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
+  - **Document Editing Service address**: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
+  - **Document Editing Service address for internal requests from the server**: https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
+  - **Server address for internal requests from the Document Editing Service**: https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>
   
 Para comprobar si está ejecutándose se puede ingresar a https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>
   
