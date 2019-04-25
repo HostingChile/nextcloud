@@ -41,7 +41,7 @@ Luego de instalar la app, se debe usar la siguiente configuración (habilitar co
 Para comprobar si está ejecutándose se puede ingresar a `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
   
 ## Usar servidor de correo integrado
-Si se usa el archivo ``docker-compose.mail.yml` el sistema tendrá un servidor de correos integrado. Para usarlo se debe usar la siguiente configuración:
+Si se usa el archivo `docker-compose.mail.yml` el sistema tendrá un servidor de correos integrado. Para usarlo se debe usar la siguiente configuración:
   - **Send mode**: SMTP
   - **Encrytpion**: None
   - **From address**: `<ELEGIR_NOMBRE>@<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`
