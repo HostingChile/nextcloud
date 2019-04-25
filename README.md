@@ -25,6 +25,7 @@
 - Ejecutar `docker-compose up -d`. Luego se puede ingresar a `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`. Cuando ya muestre la página de manera correcta se puede continuar y ejecutar los comandos:
   - `docker-compose exec --user www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema
   - `docker-compose exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
+  - `docker-compose exec -u www-data nextcloud php config:system:set overwriteprotocol --value="https"` para que cargue correctamente la imágenes 8https://help.nextcloud.com/t/nextcloud-wont-load-any-mixed-content/13565/2).
 
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>` en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
