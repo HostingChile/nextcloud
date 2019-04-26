@@ -11,17 +11,18 @@
 - Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.20.0.0/16 accept'`, luego reiniciar el firewall y docker con `systemctl restart firewalld && systemctl restart docker`.
 - Para facilitar la ejecución de los comandos de docker-compose es mejor editar el archivo `vim ~/.bash_profile` y agregar la siguiente variable de entorno:
   ```
-  COMPOSE_FILE=/home/nextcloud/docker-compose.yml:[AGREGAR LOS OTROS ARCHIVOS docker-compose QUE SE USARÁN]
+  COMPOSE_FILE=docker-compose.yml:[AGREGAR LOS OTROS ARCHIVOS docker-compose QUE SE USARÁN]
   
   export COMPOSE_FILE
   ```
   Luego se debe ejecutar `source ~/.bash_profile` para que tome las variables.
-- **Opcional**: Agregar un alias a docker-compose en el archivo `~/.bashrc` con `alias dc='docker-compose'` y luego ejecutar `source ~/.bash_profile` para que tome los cambios. Si se hace este paso se puede reemplazar el comando `docker-compose` por `dc` en los siguientes pasos.
+- **Opcional**: Agregar un alias a docker-compose en el archivo `vim ~/.bashrc` con `alias dc='docker-compose'` y luego ejecutar `source ~/.bash_profile` para que tome los cambios. Si se hace este paso se puede reemplazar el comando `docker-compose` por `dc` en los siguientes pasos.
 
 - **Opcional**: Ejecutar `docker-compose pull` para que baje las imágenes a usar. Útil para la creación de plantillas de VM.
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
 
+- Los siguientes comandos deben ser ejecutados en la caprte `cd /home/nextcloud`
 - Ejecutar `docker-compose up -d`. Luego se puede ingresar a `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`. Cuando ya muestre la página de manera correcta se puede continuar y ejecutar los comandos:
   - `docker-compose exec -u www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema. Si ya se está usando el sistema se debe hacer esto estando en *modo en mantención*.
   - `docker-compose exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
