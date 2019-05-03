@@ -54,6 +54,20 @@ Si se usa el archivo `docker-compose.mail.yml` el sistema tendrá un servidor de
 - Copiar en `/var/lib/docker/volumes/nextcloud_proxy-certs/_data/` los archivos .crt y .key que componen el certificado. El nombre de estos archivos debe ser exactamente igual al nombre del `VIRTUAL_HOST` del servicio, terminado con .crt y .key
 
 Con esto el contendor proxy generará el virtualhost correspondiente para que use el certificado.
+
+## Usar Pico CMS
+Si se usa esta aplicación, se debe realizar un cambio a la configuración del virtualhost en el Nginx para que sirva las páginas. Para esto hay que crear el archivo `vim /var/lib/docker/volumes/nextcloud_proxy-vhost/_data/<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>_location` y poner la siguiente configuración (reemplazando los valores necesarios):
+
+```
+location /sites/ {
+  rewrite /sites/(.*) /apps/cms_pico/pico/$1 break;
+  location ~ ^/apps/cms_pico/pico/(\.htaccess|\.git|config|content|content-sample|lib|vendor|CHANGELOG\.md|composer\.(json|lock)) {
+    return 404;
+  }
+  proxy_redirect off;
+  proxy_pass http://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/;
+}
+```
   
 ## Errores comunes
 1. Al entrar al sitio aparece como no seguro. Luego al ver el certificado en el navegador dice emitido por y para *letsencrypt-nginx-proxy-companion*.
