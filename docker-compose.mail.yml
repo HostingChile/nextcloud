@@ -5,8 +5,7 @@ services:
        image: elsdoerfer/exim-sender
        container_name: mail
        networks:
-            network:
-                ipv4_address: 172.16.0.8
+            - network
        environment:
             - ALLOWED_HOSTS=nextcloud
             - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
