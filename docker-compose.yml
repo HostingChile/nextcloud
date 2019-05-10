@@ -28,7 +28,8 @@ services:
         depends_on:
             - proxy
         networks:
-            - network
+            network:
+                ipv4_address: 172.16.0.3
         volumes:
             - proxy-certs:/etc/nginx/certs:rw
             - proxy-vhost:/etc/nginx/vhost.d:rw
@@ -41,7 +42,8 @@ services:
         image: mariadb
         container_name: database
         networks:
-            - network
+            network:
+                ipv4_address: 172.16.0.4
         volumes:
             - db:/var/lib/mysql
             - /etc/localtime:/etc/localtime:ro
@@ -56,7 +58,8 @@ services:
         image: nextcloud
         container_name: nextcloud
         networks:
-            - network
+            network:
+                ipv4_address: 172.16.0.5
         depends_on:
             - letsencrypt
             - proxy
@@ -83,14 +86,16 @@ services:
         image: redis:alpine
         container_name: redis
         networks:
-            - network
+            network:
+                ipv4_address: 172.16.0.6
         restart: unless-stopped
         
     cron:
         image: nextcloud:apache
         container_name: cron
         networks:
-            - network
+            network:
+                ipv4_address: 172.16.0.7
         volumes:
             - nextcloud:/var/www/html
         entrypoint: /cron.sh
