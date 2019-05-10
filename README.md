@@ -8,7 +8,7 @@
   - Editar el archivo `vim /etc/selinux/config` y dejando `SELINUX=permissive` para mantener los cambios al reiniciar el servidor. Este cambio lo toma solo al reiniciar el servidor, por lo que es necesario el paso anterior.
 - Habilitar el servicio de Docker para que se ejecute la reiniciar el servidor `systemctl enable docker` 
 - Descargar el repositorio con `git clone https://github.com/tikoflano/nextcloud.git /home/nextcloud`
-- Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.20.0.0/16 accept'`, luego reiniciar el firewall y docker con `systemctl restart firewalld && systemctl restart docker`.
+- Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.16.0.0/16 accept'`, luego reiniciar el firewall y docker con `systemctl restart firewalld && systemctl restart docker`.
 - Para facilitar la ejecución de los comandos de docker-compose es mejor editar el archivo `vim ~/.bash_profile` y agregar la siguiente variable de entorno:
   ```
   COMPOSE_FILE=docker-compose.yml:[AGREGAR LOS OTROS ARCHIVOS docker-compose QUE SE USARÁN]
