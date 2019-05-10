@@ -7,7 +7,8 @@ services:
         labels:
             - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
         networks:
-            - network
+            network:
+                ipv4_address: 172.16.0.3
         ports:
             - 80:80
             - 443:443
@@ -111,4 +112,5 @@ networks:
         ipam:
             driver: default
             config:
-                - subnet: 172.20.0.0/16
+                - subnet: 172.16.0.0/16
+                - gateway: 172.16.0.1
