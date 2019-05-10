@@ -110,6 +110,6 @@ volumes:
 networks:
     network:
         ipam:
-            driver: bridge
+            driver: default
             config:
                 - subnet: 172.16.0.0/16
