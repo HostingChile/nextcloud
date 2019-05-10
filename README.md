@@ -28,6 +28,10 @@
   - `docker-compose exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
   - `docker-compose exec -u www-data nextcloud php occ config:system:set overwriteprotocol --value="https"` para que cargue correctamente la imágenes (https://help.nextcloud.com/t/nextcloud-wont-load-any-mixed-content/13565/2).
 
+## Actualización
+Se deben ejecutar el comando `docker-compose pull && docker-compose up -d`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
+ 
+
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>` en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
 
@@ -77,3 +81,4 @@ location /sites/ {
   - Se ha alcanzado el límite de certificados gratuitos posibles para emitir por Let's Encrypt (https://letsencrypt.org/docs/rate-limits/). 
 2. **502 Bad Gateway**
 Alguno de los servicios aún no arranca, hay que esperar unos 5 minutos. En caso de persistir el problema se deben ver los logs.
+3. Las imágenes se descargan muy lento. Es probable que sea un límite impuesto por la red por lo cual debe contactarse con el administrador de red.
