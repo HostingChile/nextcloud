@@ -32,7 +32,8 @@
 Se deben ejecutar el comando `docker-compose pull && docker-compose up -d`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
 
 Luego de la actualización se recomienda entrar a `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/admin/overview` y revisar si la actualización fue realizada correctamente y si hay más acciones que se deben realizar.
- 
+
+**Importante**: las actualziaciones pueden generar que algunas apps dejen de funcionar. Por defecto Nextcloud deshabilita algunas aplicaciones las cuales deben ser actualizadas y habilitadas manualmente. 
 
 ## Habilitar Collabora
 Luego de instalar la app, se debe usar la URL `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>` en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
