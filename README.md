@@ -27,6 +27,7 @@
   - `docker-compose exec -u www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema. Si ya se está usando el sistema se debe hacer esto estando en *modo en mantención*.
   - `docker-compose exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
   - `docker-compose exec -u www-data nextcloud php occ config:system:set overwriteprotocol --value="https"` para que cargue correctamente la imágenes (https://help.nextcloud.com/t/nextcloud-wont-load-any-mixed-content/13565/2).
+  - `docker-compose exec -u www-data nextcloud php occ config:system:set forwarded_for_headers 0 --value=HTTP_X_FORWARDED_FOR` y `docker-compose exec -u www-data nextcloud php occ config:system:set trusted_proxies 0 --value=172.16.0.1` para que se logee correctamente la IP de los visitantes, así se evitan bloqueos por logins incorrectos (https://github.com/nextcloud/docker/issues/294).
 
 ## Actualización
 Se deben ejecutar el comando `docker-compose pull && docker-compose up -d`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
