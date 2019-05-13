@@ -41,7 +41,7 @@ services:
             context: ./nextcloud
             args:
                 - DEFAULT_APPS=${DEFAULT_APPS}
-                - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS
+                - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
         container_name: nextcloud
         networks:
             - network
