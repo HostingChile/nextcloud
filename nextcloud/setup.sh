@@ -26,6 +26,7 @@ elif [ "$DOCS_EDITOR" == "onlyoffice" ];then
     run_occ "config:app:set onlyoffice DocumentServerUrl --value=https://$ONLYOFFICE_VIRTUAL_HOST"
     run_occ "config:app:set onlyoffice StorageUrl --value=https://$VIRTUAL_HOST"
     run_occ 'config:app:set onlyoffice defFormats --value={\"csv\":\"true\",\"doc\":\"true\",\"docm\":\"true\",\"docx\":\"true\",\"dotx\":\"true\",\"epub\":\"true\",\"html\":\"true\",\"odp\":\"true\",\"ods\":\"true\",\"odt\":\"true\",\"pdf\":\"true\",\"potm\":\"true\",\"potx\":\"true\",\"ppsm\":\"true\",\"ppsx\":\"true\",\"ppt\":\"true\",\"pptm\":\"true\",\"pptx\":\"true\",\"rtf\":\"true\",\"txt\":\"true\",\"xls\":\"true\",\"xlsm\":\"true\",\"xlsx\":\"true\",\"xltm\":\"true\",\"xltx\":\"true\"}'
+    run_occ 'config:app:set onlyoffice editFormats --value={\"csv\":\"true\",\"odp\":\"true\",\"ods\":\"true\",\"odt\":\"true\",\"rtf\":\"true\",\"txt\":\"true\"}'
 fi
 
 # Apps install
