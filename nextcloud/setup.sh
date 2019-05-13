@@ -16,9 +16,9 @@ run_occ 'config:system:set trusted_proxies 0 --value="$(hostname -i | cut -d. -f
 
 # Install selected doc editor
 if [ "$DOCS_EDITOR" == "collabora" ];then
-    run_occ "app:install $APP"
-elif [ "$DOCS_EDITOR" == "onlyoffce" ];then
-    run_occ "app:install $APP"
+    run_occ "app:install richdocuments"
+elif [ "$DOCS_EDITOR" == "onlyoffice" ];then
+    run_occ "app:install onlyoffice"
 fi
 
 # Apps install
