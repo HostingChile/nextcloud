@@ -22,3 +22,4 @@ services:
     nextcloud:
         environment: 
             - DOCS_EDITOR=onlyoffice
+            - ONLYOFFICE_VIRTUAL_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
