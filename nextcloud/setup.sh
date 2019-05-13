@@ -4,6 +4,9 @@ run_occ() {
   su -p www-data -s /bin/sh -c "php /var/www/html/occ $1"
 }
 
+# CHeck if NextCloud is installed
+run_occ 'status' | head -n1 | grep -q true || echo "Nextcloud is not installed yet" && exit 1
+
 # Maintenance mode on
 run_occ 'maintenance:mode --on'
 
