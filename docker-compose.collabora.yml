@@ -25,6 +25,5 @@ services:
         restart: unless-stopped 
         
     nextcloud:
-        build: 
-            args:
-                - DOCS_EDITOR=collabora
+        environment: 
+            - DOCS_EDITOR=collabora

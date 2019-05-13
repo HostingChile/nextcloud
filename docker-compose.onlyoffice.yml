@@ -20,6 +20,5 @@ services:
         restart: unless-stopped 
         
     nextcloud:
-        build: 
-            args:
-                - DOCS_EDITOR=onlyoffice
+        environment: 
+            - DOCS_EDITOR=onlyoffice

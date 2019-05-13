@@ -37,12 +37,7 @@ services:
         restart: unless-stopped
   
     nextcloud:
-        build: 
-            context: ./nextcloud
-            args:
-                - DOCS_EDITOR=none
-                - DEFAULT_APPS=${DEFAULT_APPS}
-                - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
+        image: nextcloud:stable
         container_name: nextcloud
         networks:
             - network
@@ -67,6 +62,8 @@ services:
             - VIRTUAL_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
+            - DEFAULT_APPS=${DEFAULT_APPS}
+            - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
         restart: unless-stopped
         
     letsencrypt:

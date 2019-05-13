@@ -14,6 +14,13 @@ run_occ 'config:system:set overwriteprotocol --value="https"'
 run_occ 'config:system:set forwarded_for_headers 0 --value=HTTP_X_FORWARDED_FOR'
 run_occ 'config:system:set trusted_proxies 0 --value="$(hostname -i | cut -d. -f1-3).1"'
 
+# Install selected doc editor
+if [ "$DOCS_EDITOR" == "collabora" ];then
+    run_occ "app:install $APP"
+elif [ "$DOCS_EDITOR" == "onlyoffce" ];then
+    run_occ "app:install $APP"
+fi
+
 # Apps install
 for APP in ${DEFAULT_APPS//,/ } ${DEFAULT_ADMIN_APPS//,/ };do
     run_occ "app:install $APP"
