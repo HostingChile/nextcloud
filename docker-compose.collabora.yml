@@ -23,3 +23,8 @@ services:
             - LETSENCRYPT_HOST=${COLLABORA_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped 
+        
+    nextcloud:
+        build: 
+            args:
+                - DOCS_EDITOR=collabora

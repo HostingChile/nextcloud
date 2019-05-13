@@ -40,6 +40,7 @@ services:
         build: 
             context: ./nextcloud
             args:
+                - DOCS_EDITOR=none
                 - DEFAULT_APPS=${DEFAULT_APPS}
                 - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
         container_name: nextcloud
