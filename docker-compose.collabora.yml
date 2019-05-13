@@ -15,7 +15,7 @@ services:
             - MKNOD
         environment:
             - domain=${NEXTCLOUD_SUBDOMAIN}\\.${ESCAPED_DOMAIN}
-            - username=${COLLABORA_USERNAME:-admin}
+            - username=${COLLABORA_USERNAME}
             - password=${COLLABORA_PASSWORD}
             - VIRTUAL_PROTO=https
             - VIRTUAL_PORT=443
