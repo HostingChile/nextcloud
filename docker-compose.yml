@@ -18,24 +18,9 @@ services:
             - proxy-certs:/etc/nginx/certs:ro
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
-            - ${PWD}/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
+            - ${PWD}/proxy/upload_limits.conf:/etc/nginx/conf.d/upload_limits.conf:ro
         restart: unless-stopped
   
-    letsencrypt:
-        image: jrcs/letsencrypt-nginx-proxy-companion
-        container_name: letsencrypt
-        depends_on:
-            - proxy
-        networks:
-            - network
-        volumes:
-            - proxy-certs:/etc/nginx/certs:rw
-            - proxy-vhost:/etc/nginx/vhost.d:rw
-            - proxy-html:/usr/share/nginx/html:rw
-            - /etc/localtime:/etc/localtime:ro
-            - /var/run/docker.sock:/var/run/docker.sock:ro
-        restart: unless-stopped
-    
     database:
         image: mariadb
         container_name: database
@@ -52,13 +37,13 @@ services:
         restart: unless-stopped
   
     nextcloud:
-        image: nextcloud
+        build: ./nextcloud
         container_name: nextcloud
         networks:
             - network
         depends_on:
-            - letsencrypt
             - proxy
+            - letsencrypt
             - database
             - redis
         volumes:
@@ -78,6 +63,21 @@ services:
             - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped
         
+    letsencrypt:
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        container_name: letsencrypt
+        depends_on:
+            - proxy
+        networks:
+            - network
+        volumes:
+            - proxy-certs:/etc/nginx/certs:rw
+            - proxy-vhost:/etc/nginx/vhost.d:rw
+            - proxy-html:/usr/share/nginx/html:rw
+            - /etc/localtime:/etc/localtime:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        restart: unless-stopped
+        
     redis:
         image: redis:alpine
         container_name: redis
@@ -85,18 +85,18 @@ services:
             - network
         restart: unless-stopped
         
-    cron:
-        image: nextcloud:apache
-        container_name: cron
-        networks:
-            - network
-        volumes:
-            - nextcloud:/var/www/html
-        entrypoint: /cron.sh
-        depends_on:
-            - database
-            - redis
-        restart: unless-stopped
+#    cron:
+#        image: nextcloud:latest
+#        container_name: cron
+#        networks:
+#            - network
+#        volumes:
+#            - nextcloud:/var/www/html
+#        entrypoint: /cron.sh
+#        depends_on:
+#            - database
+#            - redis
+#        restart: unless-stopped
         
 volumes:
     nextcloud:

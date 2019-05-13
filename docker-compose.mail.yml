@@ -1,6 +1,12 @@
 version: '3' 
 
 services:
+    nextcloud:
+        environment:
+            - SMTP_HOST=mail
+            - MAIL_FROM_ADDRESS=admin
+            - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+    
     mail:
        image: elsdoerfer/exim-sender
        container_name: mail

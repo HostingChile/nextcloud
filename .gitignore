@@ -1,4 +1,2 @@
 .env
-app/
-only_office/
-proxy/
+/nbproject/
