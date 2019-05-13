@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 run_occ() {
   su -p www-data -s /bin/sh -c "php /var/www/html/occ $1"
