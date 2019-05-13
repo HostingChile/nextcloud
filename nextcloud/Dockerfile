@@ -1,4 +1,4 @@
-FROM nextcloud:
+FROM nextcloud:stable
 
 COPY setup.sh /
 
