@@ -10,8 +10,6 @@ services:
     mail:
         image: elsdoerfer/exim-sender
         container_name: mail
-        networks:
-            - network
         volumes:
             - /etc/localtime:/etc/localtime:ro
         environment:

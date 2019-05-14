@@ -6,8 +6,6 @@ services:
         container_name: onlyoffice
         stdin_open: true
         tty: true
-        networks:
-            - network
         depends_on:
             - proxy
             - letsencrypt

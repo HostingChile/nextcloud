@@ -10,8 +10,6 @@ services:
     antivirus:
         image: mkodockx/docker-clamav:latest
         container_name: antivirus
-        networks:
-            - network
         volumes:
             - /etc/localtime:/etc/localtime:ro
         restart: unless-stopped

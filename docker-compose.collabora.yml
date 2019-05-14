@@ -4,8 +4,6 @@ services:
     document_editor:
         image: collabora/code
         container_name: collabora
-        networks:
-            - network
         depends_on:
             - proxy
             - letsencrypt

@@ -6,8 +6,6 @@ services:
         container_name: proxy
         labels:
             - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
-        networks:
-            - network
         ports:
             - 80:80
             - 443:443
@@ -24,8 +22,6 @@ services:
     database:
         image: mariadb
         container_name: database
-        networks:
-            - network
         volumes:
             - db:/var/lib/mysql
             - /etc/localtime:/etc/localtime:ro
@@ -40,8 +36,6 @@ services:
         build: ./nextcloud
         image: nextcloud:hosting
         container_name: nextcloud
-        networks:
-            - network
         depends_on:
             - proxy
             - letsencrypt
@@ -73,8 +67,6 @@ services:
         container_name: letsencrypt
         depends_on:
             - proxy
-        networks:
-            - network
         volumes:
             - proxy-certs:/etc/nginx/certs:rw
             - proxy-vhost:/etc/nginx/vhost.d:rw
@@ -86,15 +78,11 @@ services:
     redis:
         image: redis:alpine
         container_name: redis
-        networks:
-            - network
         restart: unless-stopped
         
     cron:
         image: nextcloud:stable
         container_name: cron
-        networks:
-            - network
         volumes:
             - nextcloud:/var/www/html
         entrypoint: /cron.sh
@@ -119,7 +107,7 @@ volumes:
     proxy-certs:
   
 networks:
-    network:
+    default:
         ipam:
             driver: default
             config:
