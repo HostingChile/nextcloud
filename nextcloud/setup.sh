@@ -55,4 +55,4 @@ if [ ! -d "$BASE_FOLDER" ];then
     chown www-data:www-data $BASE_FOLDER
     run_occ 'files:scan --path="/admin/files"'
 fi
-run_occ 'config:system:set skeletondirectory --value=$BASE_FOLDER'
+run_occ "config:system:set skeletondirectory --value=$BASE_FOLDER"
