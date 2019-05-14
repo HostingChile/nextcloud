@@ -60,6 +60,9 @@ services:
             - DEFAULT_APPS=${DEFAULT_APPS}
             - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
             - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
+            - SMTP_HOST=mail
+            - MAIL_FROM_ADDRESS=admin
+            - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
         restart: unless-stopped
         
     letsencrypt:
