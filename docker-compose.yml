@@ -17,7 +17,6 @@ services:
             - proxy-html:/usr/share/nginx/html:rw
             - proxy-certs:/etc/nginx/certs:ro
             - /etc/localtime:/etc/localtime:ro
-            - /etc/timezone:/etc/timezone:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
             - ${PWD}/proxy/upload_limits.conf:/etc/nginx/conf.d/upload_limits.conf:ro
         restart: unless-stopped
@@ -30,7 +29,6 @@ services:
         volumes:
             - db:/var/lib/mysql
             - /etc/localtime:/etc/localtime:ro
-            - /etc/timezone:/etc/timezone:ro
         environment:
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -51,7 +49,6 @@ services:
         volumes:
             - nextcloud:/var/www/html
             - /etc/localtime:/etc/localtime:ro
-            - /etc/timezone:/etc/timezone:ro
             - ${PWD}/nextcloud/setup.sh:/setup.sh:ro
         environment:
             - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
@@ -82,7 +79,6 @@ services:
             - proxy-vhost:/etc/nginx/vhost.d:rw
             - proxy-html:/usr/share/nginx/html:rw
             - /etc/localtime:/etc/localtime:ro
-            - /etc/timezone:/etc/timezone:ro
             - /var/run/docker.sock:/var/run/docker.sock:ro
         restart: unless-stopped
         

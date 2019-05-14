@@ -14,7 +14,6 @@ services:
             - network
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - /etc/timezone:/etc/timezone:ro
         environment:
             - ALLOWED_HOSTS=nextcloud
             - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
