@@ -18,7 +18,7 @@ run_occ 'config:system:set trusted_proxies 0 --value="$(hostname -i | cut -d. -f
 if [ "$DOCUMENT_EDITOR" == "collabora" ];then
     run_occ "app:remove onlyoffice"
     run_occ "app:install richdocuments"
-    run_occ "config:app:set richdocuments wopi_url --value=https://$DOCUMENT_EDITOR_HOST/"
+    run_occ "config:app:set richdocuments wopi_url --value=https://$DOCUMENT_EDITOR_HOST"
 elif [ "$DOCUMENT_EDITOR" == "onlyoffice" ];then
     run_occ "app:remove richdocuments"
     run_occ "app:install onlyoffice"
