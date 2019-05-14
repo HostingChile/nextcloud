@@ -65,7 +65,7 @@ services:
             - DEFAULT_APPS=${DEFAULT_APPS}
             - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
             - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
-            - $ANTIVIRUS=false
+            - ANTIVIRUS=false
         restart: unless-stopped
         
     letsencrypt:
