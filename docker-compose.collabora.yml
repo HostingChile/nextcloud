@@ -11,6 +11,7 @@ services:
             - letsencrypt
         volumes:
             - /etc/localtime:/etc/localtime:ro
+            - /etc/timezone:/etc/timezone:ro
         cap_add:
             - MKNOD
         environment:

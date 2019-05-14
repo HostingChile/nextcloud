@@ -8,11 +8,14 @@ services:
             - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
     
     mail:
-       image: elsdoerfer/exim-sender
-       container_name: mail
-       networks:
+        image: elsdoerfer/exim-sender
+        container_name: mail
+        networks:
             - network
-       environment:
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /etc/timezone:/etc/timezone:ro
+        environment:
             - ALLOWED_HOSTS=nextcloud
             - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-       restart: unless-stopped
+        restart: unless-stopped
