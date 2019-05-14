@@ -29,14 +29,12 @@ elif [ "$DOCUMENT_EDITOR" == "onlyoffice" ];then
     run_occ 'config:app:set onlyoffice editFormats --value={\"csv\":\"true\",\"odp\":\"true\",\"ods\":\"true\",\"odt\":\"true\",\"rtf\":\"true\",\"txt\":\"true\"}'
 fi
 
-# Install and configure antivirus if needed
-if [ "$ANTIVIRUS" ];then
-    run_occ "app:install files_antivirus"
-    run_occ "config:app:set files_antivirus av_host --value=antivirus"
-    run_occ "config:app:set files_antivirus av_infected_action --value=delete"
-    run_occ "config:app:set files_antivirus av_mode --value=daemon"
-    run_occ "config:app:set files_antivirus av_port --value=3310"
-fi
+# Install and configure antivirus
+run_occ "app:install files_antivirus"
+run_occ "config:app:set files_antivirus av_host --value=antivirus"
+run_occ "config:app:set files_antivirus av_infected_action --value=delete"
+run_occ "config:app:set files_antivirus av_mode --value=daemon"
+run_occ "config:app:set files_antivirus av_port --value=3310"
 
 # Apps install
 for APP in ${DEFAULT_APPS//,/ } ${DEFAULT_ADMIN_APPS//,/ };do

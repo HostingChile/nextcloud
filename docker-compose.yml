@@ -41,6 +41,7 @@ services:
             - letsencrypt
             - database
             - redis
+            - antivirus
         volumes:
             - nextcloud:/var/www/html
             - /etc/localtime:/etc/localtime:ro
@@ -59,7 +60,6 @@ services:
             - DEFAULT_APPS=${DEFAULT_APPS}
             - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
             - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
-            - ANTIVIRUS=false
         restart: unless-stopped
         
     letsencrypt:
@@ -89,6 +89,11 @@ services:
         depends_on:
             - database
             - redis
+        restart: unless-stopped
+        
+    antivirus:
+        image: mkodockx/docker-clamav:latest
+        container_name: antivirus
         restart: unless-stopped
         
     # This is for throwing a message if no document editor is selected
