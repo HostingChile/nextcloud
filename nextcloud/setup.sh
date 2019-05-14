@@ -18,12 +18,13 @@ run_occ 'config:system:set forwarded_for_headers 0 --value=HTTP_X_FORWARDED_FOR'
 run_occ 'config:system:set trusted_proxies 0 --value="$(hostname -i | cut -d. -f1-3).1"'
 
 # Install selected doc editor
-if [ "$DOCS_EDITOR" == "collabora" ];then
+if [ "$DOCUMENT_EDITOR" == "collabora" ];then
     run_occ "app:install richdocuments"
-elif [ "$DOCS_EDITOR" == "onlyoffice" ];then
+    run_occ "config:app:set richdocuments wopi_url --value=https://$DOCUMENT_EDITOR_HOST/"
+elif [ "$DOCUMENT_EDITOR" == "onlyoffice" ];then
     run_occ "app:install onlyoffice"
-    run_occ "config:app:set onlyoffice DocumentServerInternalUrl --value=https://$ONLYOFFICE_VIRTUAL_HOST/"
-    run_occ "config:app:set onlyoffice DocumentServerUrl --value=https://$ONLYOFFICE_VIRTUAL_HOST/"
+    run_occ "config:app:set onlyoffice DocumentServerInternalUrl --value=https://$DOCUMENT_EDITOR_HOST/"
+    run_occ "config:app:set onlyoffice DocumentServerUrl --value=https://$DOCUMENT_EDITOR_HOST/"
     run_occ "config:app:set onlyoffice StorageUrl --value=https://$VIRTUAL_HOST/"
     run_occ 'config:app:set onlyoffice defFormats --value={\"csv\":\"true\",\"doc\":\"true\",\"docm\":\"true\",\"docx\":\"true\",\"dotx\":\"true\",\"epub\":\"true\",\"html\":\"true\",\"odp\":\"true\",\"ods\":\"true\",\"odt\":\"true\",\"pdf\":\"true\",\"potm\":\"true\",\"potx\":\"true\",\"ppsm\":\"true\",\"ppsx\":\"true\",\"ppt\":\"true\",\"pptm\":\"true\",\"pptx\":\"true\",\"rtf\":\"true\",\"txt\":\"true\",\"xls\":\"true\",\"xlsm\":\"true\",\"xlsx\":\"true\",\"xltm\":\"true\",\"xltx\":\"true\"}'
     run_occ 'config:app:set onlyoffice editFormats --value={\"csv\":\"true\",\"odp\":\"true\",\"ods\":\"true\",\"odt\":\"true\",\"rtf\":\"true\",\"txt\":\"true\"}'
