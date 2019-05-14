@@ -38,6 +38,7 @@ services:
   
     nextcloud:
         build: ./nextcloud
+        image: nextcloud:hosting
         container_name: nextcloud
         networks:
             - network

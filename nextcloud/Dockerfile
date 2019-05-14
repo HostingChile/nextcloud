@@ -1,5 +1,5 @@
 FROM nextcloud:stable
 
-COPY setup.sh /setup.sh
+COPY setup.sh /
 
-ENTRYPOINT ["/entrypoint.sh && /setup.sh"]
+RUN sed -i '$i/bin/bash /setup.sh' /entrypoint.sh && chmod +x /setup.sh
