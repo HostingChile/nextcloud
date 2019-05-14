@@ -96,6 +96,16 @@ services:
         container_name: antivirus
         restart: unless-stopped
         
+    mail:
+        image: elsdoerfer/exim-sender
+        container_name: mail
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - ALLOWED_HOSTS=172.16.0.1/16
+            - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+        restart: unless-stopped
+        
     # This is for throwing a message if no document editor is selected
     document_editor:
         environment:
