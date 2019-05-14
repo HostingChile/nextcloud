@@ -41,7 +41,9 @@ done;
 
 # Set base structure for new users
 BASE_FOLDER="/var/www/html/data/admin/files/Base"
-mkdir $BASE_FOLDER
-chown www-data:www-data $BASE_FOLDER
-run_occ 'files:scan --path="/admin/files"'
+if [ ! -d "$BASE_FOLDER" ];then
+    mkdir $BASE_FOLDER
+    chown www-data:www-data $BASE_FOLDER
+    run_occ 'files:scan --path="/admin/files"'
+fi
 run_occ 'config:system:set skeletondirectory --value=$BASE_FOLDER'
