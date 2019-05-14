@@ -14,7 +14,7 @@ services:
         cap_add:
             - MKNOD
         environment:
-            - domain=${DOCUMENT_EDITOR_SUBDOMAIN}\\.${ESCAPED_DOMAIN}
+            - domain=${NEXTCLOUD_SUBDOMAIN}\\.${ESCAPED_DOMAIN}
             - username=${COLLABORA_USERNAME}
             - password=${COLLABORA_PASSWORD}
             - VIRTUAL_PROTO=https
