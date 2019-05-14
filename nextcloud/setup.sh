@@ -4,8 +4,8 @@ run_occ() {
   su -p www-data -s /bin/sh -c "php /var/www/html/occ $1"
 }
 
-# Check if NextCloud is installed
-run_occ 'status' | head -n1 | grep -q true || (echo "Nextcloud is not installed yet" && exit 1)
+# Check if Nextcloud is installed
+(run_occ 'status' | head -n1 | grep -q true) || (echo "Nextcloud is not installed yet" && exit 1)
 
 # Needed config
 run_occ 'db:convert-filecache-bigint -n'
