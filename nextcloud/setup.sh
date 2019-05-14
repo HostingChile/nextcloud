@@ -39,5 +39,12 @@ for APP in ${DEFAULT_ADMIN_APPS//,/ };do
     run_occ "app:enable $APP -g admin"
 done;
 
+# Set base structure for new users
+BASE_FOLDER="/var/www/html/data/admin/files/Base"
+mkdir $BASE_FOLDER
+chown www-data:www-data $BASE_FOLDER
+run_occ 'files:scan --path="/admin/files"'
+run_occ 'config:system:set skeletondirectory --value=$BASE_FOLDER'
+
 # Maintenance mode off
 run_occ 'maintenance:mode --off'
