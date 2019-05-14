@@ -1,0 +1,17 @@
+version: '3' 
+
+services:
+    nextcloud:
+        depends_on:
+            - antivirus
+        environment:
+            - DEFAULT_APPS=${DEFAULT_APPS},antivirus
+    
+    antivirus:
+        image: mkodockx/docker-clamav:alpine
+        container_name: antivirus
+        networks:
+            - network
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+        restart: unless-stopped
