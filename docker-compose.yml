@@ -102,7 +102,7 @@ services:
         volumes:
             - /etc/localtime:/etc/localtime:ro
         environment:
-            - ALLOWED_HOSTS=172.16.0.1/16
+            - ALLOWED_HOSTS=${SUBNET}
             - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
         restart: unless-stopped
         
@@ -126,4 +126,4 @@ networks:
         ipam:
             driver: default
             config:
-                - subnet: 172.16.0.0/16
+                - subnet: ${SUBNET}
