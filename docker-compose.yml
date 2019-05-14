@@ -101,6 +101,9 @@ services:
             - redis
         restart: unless-stopped
         
+    # This is for throwing a message if no document editor is selected
+    document_editor:
+        
 volumes:
     nextcloud:
     db: 

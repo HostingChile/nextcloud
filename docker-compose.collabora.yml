@@ -1,7 +1,7 @@
 version: '3' 
 
 services:
-    collabora:
+    document_editor:
         image: collabora/code
         container_name: collabora
         networks:
@@ -19,11 +19,12 @@ services:
             - password=${COLLABORA_PASSWORD}
             - VIRTUAL_PROTO=https
             - VIRTUAL_PORT=443
-            - VIRTUAL_HOST=${COLLABORA_SUBDOMAIN}.${DOMAIN}
-            - LETSENCRYPT_HOST=${COLLABORA_SUBDOMAIN}.${DOMAIN}
+            - VIRTUAL_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
+            - LETSENCRYPT_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped 
         
     nextcloud:
         environment: 
-            - DOCS_EDITOR=collabora
+            - DOCUMENT_EDITOR=collabora
+            - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}

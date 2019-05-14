@@ -1,7 +1,7 @@
 version: '3' 
 
 services:
-    onlyoffice:
+    document_editor:
         image: onlyoffice/documentserver:latest
         container_name: onlyoffice
         stdin_open: true
@@ -14,12 +14,12 @@ services:
         volumes:
             - /etc/localtime:/etc/localtime:ro
         environment:
-            - VIRTUAL_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
-            - LETSENCRYPT_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
+            - VIRTUAL_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
+            - LETSENCRYPT_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_EMAIL=${EMAIL}
         restart: unless-stopped 
         
     nextcloud:
         environment: 
-            - DOCS_EDITOR=onlyoffice
-            - ONLYOFFICE_VIRTUAL_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
+            - DOCUMENT_EDITOR=onlyoffice
+            - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
