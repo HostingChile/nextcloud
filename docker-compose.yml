@@ -106,6 +106,21 @@ services:
             - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
         restart: unless-stopped
         
+    database-backup:
+        image: fradelg/mysql-cron-backup
+        depends_on:
+            - database
+        volumes:
+            - db_backup:/backup
+        environment:
+            - MYSQL_HOST=database
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQLDUMP_OPTS=--single-transaction
+            - MAX_BACKUPS=${MAX_BACKUPS}
+            - CRON_TIME=${CRON}
+        restart: unless-stopped
+        
     # This is for throwing a message if no document editor is selected
     document_editor:
         environment:
@@ -116,6 +131,7 @@ services:
 volumes:
     nextcloud:
     db: 
+    db_backup: 
     proxy-conf:
     proxy-vhost:
     proxy-html:
