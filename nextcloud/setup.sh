@@ -7,9 +7,6 @@ run_occ() {
 # Check if NextCloud is installed
 run_occ 'status' | head -n1 | grep -q true || (echo "Nextcloud is not installed yet" && exit 1)
 
-# Maintenance mode on
-run_occ 'maintenance:mode --on'
-
 # Needed config
 run_occ 'db:convert-filecache-bigint -n'
 run_occ 'background:cron'
@@ -46,6 +43,3 @@ mkdir $BASE_FOLDER
 chown www-data:www-data $BASE_FOLDER
 run_occ 'files:scan --path="/admin/files"'
 run_occ 'config:system:set skeletondirectory --value=$BASE_FOLDER'
-
-# Maintenance mode off
-run_occ 'maintenance:mode --off'
