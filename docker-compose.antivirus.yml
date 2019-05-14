@@ -5,7 +5,7 @@ services:
         depends_on:
             - antivirus
         environment:
-            - DEFAULT_APPS=${DEFAULT_APPS},antivirus
+            - $ANTIVIRUS=true
     
     antivirus:
         image: mkodockx/docker-clamav:alpine
