@@ -109,6 +109,8 @@ services:
     database-backup:
         image: fradelg/mysql-cron-backup
         container_name: database-backup
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
         depends_on:
             - database
         volumes:
