@@ -8,54 +8,39 @@
   - Editar el archivo `vim /etc/selinux/config` y dejando `SELINUX=permissive` para mantener los cambios al reiniciar el servidor. Este cambio lo toma solo al reiniciar el servidor, por lo que es necesario el paso anterior.
 - Habilitar el servicio de Docker para que se ejecute la reiniciar el servidor `systemctl enable docker` 
 - Descargar el repositorio con `git clone https://github.com/tikoflano/nextcloud.git /home/nextcloud`
-- Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=172.16.0.0/16 accept'`, luego reiniciar el firewall y docker con `systemctl restart firewalld && systemctl restart docker`.
-- Para facilitar la ejecución de los comandos de docker-compose es mejor editar el archivo `vim ~/.bash_profile` y agregar la siguiente variable de entorno:
+- Para facilitar la ejecución de los comandos de docker-compose es mejor editar el archivo `vim ~/.bash_profile` y agregar la siguiente variable de entorno, reemplazando `DOCUMENT_EDITOR` por *onlyoffice* o *collabora* según el editor que se vaya a usar:
   ```
-  COMPOSE_FILE=docker-compose.yml:[AGREGAR LOS OTROS ARCHIVOS docker-compose QUE SE USARÁN]
+  COMPOSE_FILE=docker-compose.yml:docker-compose.<DOCUMENT_EDITOR>.yml
   
   export COMPOSE_FILE
   ```
   Luego se debe ejecutar `source ~/.bash_profile` para que tome las variables.
 - **Opcional**: Agregar un alias a docker-compose en el archivo `vim ~/.bashrc` con `alias dc='docker-compose'` y luego ejecutar `source ~/.bash_profile` para que tome los cambios. Si se hace este paso se puede reemplazar el comando `docker-compose` por `dc` en los siguientes pasos.
-
-- **Opcional**: Ejecutar `docker-compose pull` para que baje las imágenes a usar. Útil para la creación de plantillas de VM.
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
+- Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=<SUBNET> accept'`, luego reiniciar el firewall y docker con `systemctl restart firewalld && systemctl restart docker`.
+- Ingresar a la carpeta `cd /home/nextcloud` y levantar los servicios con `docker-compose up -d --build`
 
-- Los siguientes comandos deben ser ejecutados en la caprte `cd /home/nextcloud`
-- Ejecutar `docker-compose up -d`. Luego se puede ingresar a `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`. Cuando ya muestre la página de manera correcta se puede continuar y ejecutar los comandos:
-  - `docker-compose exec -u www-data nextcloud php occ db:convert-filecache-bigint` para evitar un aviso que sale en el estado del sistema. Si ya se está usando el sistema se debe hacer esto estando en *modo en mantención*.
-  - `docker-compose exec -u www-data nextcloud php occ background:cron` para cambiar le modo de ejecución de los trabajos en segundo plano
-  - `docker-compose exec -u www-data nextcloud php occ config:system:set overwriteprotocol --value="https"` para que cargue correctamente la imágenes (https://help.nextcloud.com/t/nextcloud-wont-load-any-mixed-content/13565/2).
-  - `docker-compose exec -u www-data nextcloud php occ config:system:set forwarded_for_headers 0 --value=HTTP_X_FORWARDED_FOR` y `docker-compose exec -u www-data nextcloud php occ config:system:set trusted_proxies 0 --value=172.16.0.1` para que se logee correctamente la IP de los visitantes, así se evitan bloqueos por logins incorrectos (https://github.com/nextcloud/docker/issues/294).
+## Cambiar parámetros
+Si se cambia algun parámetro del archivo `.env` es necesario reconstruir los contenedores con el comando `docker-compose up -d --force-recreate --build <SERVICIO A REINICIAR>`, si no se especifica un `<SERVICIO A REINICIAR>` se reiniciarán todos.
 
 ## Actualización
-Se deben ejecutar el comando `docker-compose pull && docker-compose up -d`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
+Se deben ejecutar el comando `docker-compose pull --ignore-pull-failures && docker-compose up -d --build`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
 
 Luego de la actualización se recomienda entrar a `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/admin/overview` y revisar si la actualización fue realizada correctamente y si hay más acciones que se deben realizar.
 
-**Importante**: las actualziaciones pueden generar que algunas apps dejen de funcionar. Por defecto Nextcloud deshabilita algunas aplicaciones las cuales deben ser actualizadas y habilitadas manualmente. 
+**Importante**: las actualziaciones pueden generar que algunas apps dejen de funcionar. Por defecto Nextcloud deshabilita algunas aplicaciones las cuales deben ser actualizadas y habilitadas manualmente en `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/apps`
 
-## Habilitar Collabora
-Luego de instalar la app, se debe usar la URL `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>` en la configuración. Si aparece un mensaje diciendo *Saved with error* se puede ignorar.
+## Collabora
+Para comprobar si está ejecutándose se puede ingresar a `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>`, debe mostrar el mensaje "ok".
 
-Para comprobar si está ejecutándose se puede ingresar a `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin/admin.html`
+Se puede ingresar a `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin/admin.html` con los datos de acceso definidos en el archivo `.env`.
   
-## Habilitar OnlyOffice
-Luego de instalar la app, se debe usar la siguiente configuración (habilitar configuración avanzada):
-  - **Document Editing Service address**: `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
-  - **Document Editing Service address for internal requests from the server**: `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
-  - **Server address for internal requests from the Document Editing Service**: `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`
-  
+## OnlyOffice  
 Para comprobar si está ejecutándose se puede ingresar a `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
   
-## Usar servidor de correo integrado
-Si se usa el archivo `docker-compose.mail.yml` el sistema tendrá un servidor de correos integrado. Para usarlo se debe usar la siguiente configuración:
-  - **Send mode**: SMTP
-  - **Encrytpion**: None
-  - **From address**: `<ELEGIR_NOMBRE>@<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>`
-  - **Authentication** method: None
-  - **Server address**: mail : 25
+## Servidor de correo integrado
+El sistema viene con un servidor de correo propio listo y ya configurado. Si se quiere usar el correo propio se debe cambiar la configuración en `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/admin`
   
 ## Usar certificado propio
 - Eliminar la variables de entorno `LETSENCRYPT_*` del archivo .
