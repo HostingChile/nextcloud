@@ -18,11 +18,11 @@ run_occ 'config:system:set default_locale --value=es_CL'
 # Install selected document editor
 if [ "$DOCUMENT_EDITOR" == "collabora" ];then
     run_occ "app:remove onlyoffice"
-    run_occ "app:install richdocuments"
+    run_occ "app:install richdocuments" || run_occ "app:update richdocuments"
     run_occ "config:app:set richdocuments wopi_url --value=https://$DOCUMENT_EDITOR_HOST"
 elif [ "$DOCUMENT_EDITOR" == "onlyoffice" ];then
     run_occ "app:remove richdocuments"
-    run_occ "app:install onlyoffice"
+    run_occ "app:install onlyoffice" || run_occ "app:update onlyoffice"
     run_occ "config:app:set onlyoffice DocumentServerInternalUrl --value=https://$DOCUMENT_EDITOR_HOST/"
     run_occ "config:app:set onlyoffice DocumentServerUrl --value=https://$DOCUMENT_EDITOR_HOST/"
     run_occ "config:app:set onlyoffice StorageUrl --value=https://$VIRTUAL_HOST/"
@@ -31,15 +31,15 @@ elif [ "$DOCUMENT_EDITOR" == "onlyoffice" ];then
 fi
 
 # Install and configure antivirus
-run_occ "app:install files_antivirus"
+run_occ "app:install files_antivirus" || run_occ "app:update files_antivirus"
 run_occ "config:app:set files_antivirus av_host --value=antivirus"
 run_occ "config:app:set files_antivirus av_infected_action --value=delete"
 run_occ "config:app:set files_antivirus av_mode --value=daemon"
 run_occ "config:app:set files_antivirus av_port --value=3310"
 
-# Apps install
+# Default apps install and update
 for APP in ${DEFAULT_APPS//,/ } ${DEFAULT_ADMIN_APPS//,/ };do
-    run_occ "app:install $APP"
+    run_occ "app:install $APP" || run_occ "app:update $APP"
 done;
 
 # Apps for admin only
