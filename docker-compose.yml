@@ -60,9 +60,6 @@ services:
             - DEFAULT_APPS=${DEFAULT_APPS}
             - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
             - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
-            - SMTP_HOST=mail
-            - MAIL_FROM_ADDRESS=admin
-            - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
         restart: unless-stopped
         
     letsencrypt:
@@ -97,16 +94,6 @@ services:
     antivirus:
         image: mkodockx/docker-clamav:latest
         container_name: antivirus
-        restart: unless-stopped
-        
-    mail:
-        image: elsdoerfer/exim-sender
-        container_name: mail
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - ALLOWED_HOSTS=${SUBNET}
-            - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
         restart: unless-stopped
         
     database-backup:
