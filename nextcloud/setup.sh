@@ -10,9 +10,10 @@ run_occ() {
 # Needed config
 run_occ 'db:convert-filecache-bigint -n'
 run_occ 'background:cron'
-run_occ 'config:system:set overwriteprotocol --value="https"'
+run_occ 'config:system:set overwriteprotocol --value=https'
 run_occ 'config:system:set forwarded_for_headers 0 --value=HTTP_X_FORWARDED_FOR'
 run_occ 'config:system:set trusted_proxies 0 --value="$(hostname -i | cut -d. -f1-3).1"'
+run_occ 'config:system:set default_locale --value=es_CL'
 
 # Install selected document editor
 if [ "$DOCUMENT_EDITOR" == "collabora" ];then
