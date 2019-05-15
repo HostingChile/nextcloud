@@ -125,6 +125,7 @@ services:
             - MYSQLDUMP_OPTS=--single-transaction
             - MAX_BACKUPS=${MAX_BACKUPS}
             - CRON_TIME=${CRON}
+            - MYSQLDUMP_OPTS=--single-transaction
         restart: unless-stopped
         
     # This is for throwing a message if no document editor is selected
