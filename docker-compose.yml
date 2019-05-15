@@ -84,7 +84,7 @@ services:
         restart: unless-stopped
         
     cron:
-        image: nextcloud:stable
+        image: nextcloud:latest
         container_name: cron
         volumes:
             - nextcloud:/var/www/html
