@@ -32,12 +32,12 @@ Luego de la actualización se recomienda entrar a `https://<NEXTCLOUD_SUBDOMAIN>
 **Importante**: las actualziaciones pueden generar que algunas apps dejen de funcionar. Por defecto Nextcloud deshabilita algunas aplicaciones las cuales deben ser actualizadas y habilitadas manualmente en `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/apps`
 
 ## Collabora
-Para comprobar si está ejecutándose se puede ingresar a `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>`, debe mostrar el mensaje "ok".
+Para comprobar si está ejecutándose se puede ingresar a `https://<DOCUMENT_EDITOR_SUBDOMAIN>.<DOMAIN>`, debe mostrar el mensaje "ok".
 
-Se puede ingresar a `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin/admin.html` con los datos de acceso definidos en el archivo `.env`.
+Se puede ingresar a `https://<DOCUMENT_EDITOR_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin/admin.html` con los datos de acceso definidos en el archivo `.env`.
   
 ## OnlyOffice  
-Para comprobar si está ejecutándose se puede ingresar a `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
+Para comprobar si está ejecutándose se puede ingresar a `https://<DOCUMENT_EDITOR_SUBDOMAIN>.<DOMAIN>`
   
 ## Servidor de correo integrado
 Se se usa el archivo `docker-compose.mail.yml`, se ejecutará un contenedor con un servidor de correo listo y se agregará la configuración al Nextcloud. En caso de usar el servidor de correo propio, se debe configurar en `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/admin`.
@@ -66,10 +66,10 @@ location /sites/ {
 1. Al entrar al sitio aparece como no seguro. Luego al ver el certificado en el navegador dice emitido por y para *letsencrypt-nginx-proxy-companion*.
   Esto ocurre porque el servicio que provee los ceritificados aun no lo ha emitido. Posibles razones:
   - Aun esta trabajando en eso. Puede tardar unos 5 minutos.
-  - El subdominio nextcloud.dominio.tld aun no responde públicamente a la IP del servidor.
+  - El subdominio <NEXTCLOUD_SUBDOMAIN>.<DOMAIN> aun no responde públicamente a la IP del servidor.
   - Se ha alcanzado el límite de certificados gratuitos posibles para emitir por Let's Encrypt (https://letsencrypt.org/docs/rate-limits/). 
 2. **502 Bad Gateway**
-Alguno de los servicios aún no arranca, hay que esperar unos 5 minutos. En caso de persistir el problema se deben ver los logs.
+Alguno de los servicios aún no arranca, hay que esperar unos 2 ~ 5 minutos. En caso de persistir el problema se deben ver los logs con `docker-compose logs -f --tail=20`.
 3. Las imágenes de Docker se descargan muy lento. Es probable que sea un límite impuesto por la red por lo cual debe contactarse con el administrador de red.
 4. Al ejecutar un comando de `docker-compose` dice *ERROR: The Compose file is invalid because: Service document_editor has neither an image nor a build context specified. At least one must be provided.*
 No se ha espcificado que editor de documentos usar. Para esto hay que definirlo en la variable `COMPOSE_FILE` (como dice más arriba) o usando `docker compose -f docker-compose.yml -f docker-compose.<DOCUMENT_EDITOR>.yml`.
