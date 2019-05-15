@@ -8,9 +8,9 @@
   - Editar el archivo `vim /etc/selinux/config` y dejando `SELINUX=permissive` para mantener los cambios al reiniciar el servidor. Este cambio lo toma solo al reiniciar el servidor, por lo que es necesario el paso anterior.
 - Habilitar el servicio de Docker para que se ejecute la reiniciar el servidor `systemctl enable docker` 
 - Descargar el repositorio con `git clone https://github.com/tikoflano/nextcloud.git /home/nextcloud`
-- Para facilitar la ejecución de los comandos de docker-compose es mejor editar el archivo `vim ~/.bash_profile` y agregar la siguiente variable de entorno, reemplazando `DOCUMENT_EDITOR` por *onlyoffice* o *collabora* según el editor que se vaya a usar:
+- Para facilitar la ejecución de los comandos de docker-compose es mejor editar el archivo `vim ~/.bash_profile` y agregar la siguiente variable de entorno, separando los archivos `docker-compose.*.yml` que se usen con un `:`:
   ```
-  COMPOSE_FILE=docker-compose.yml:docker-compose.<DOCUMENT_EDITOR>.yml
+  COMPOSE_FILE=docker-compose.yml:<OTROS ARCHIVOS docker-compose.*.yml A USAR>
   
   export COMPOSE_FILE
   ```
@@ -40,7 +40,7 @@ Se puede ingresar a `https://<COLLABORA_SUBDOMAIN>.<DOMAIN>/loleaflet/dist/admin
 Para comprobar si está ejecutándose se puede ingresar a `https://<ONLYOFFICE_SUBDOMAIN>.<DOMAIN>`
   
 ## Servidor de correo integrado
-El sistema viene con un servidor de correo propio listo y ya configurado. Si se quiere usar el correo propio se debe cambiar la configuración en `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/admin`
+Se se usa el archivo `docker-compose.mail.yml`, se ejecutará un contenedor con un servidor de correo listo y se agregará la configuración al Nextcloud. En caso de usar el servidor de correo propio, se debe configurar en `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/admin`.
   
 ## Usar certificado propio
 - Eliminar la variables de entorno `LETSENCRYPT_*` del archivo .
