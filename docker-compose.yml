@@ -44,7 +44,7 @@ services:
         volumes:
             - nextcloud:/var/www/html
             - /etc/localtime:/etc/localtime:ro
-            - ${PWD}/nextcloud/setup.sh:/usr/local/bin/nc-setup
+            - ${PWD}/nextcloud/setup.sh:/usr/local/bin/setup
         environment:
             - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
             - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
