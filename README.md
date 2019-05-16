@@ -19,13 +19,28 @@
 - Copiar el archivo de configuración de ejemplo `cp /home/nextcloud/example.env /home/nextcloud/.env`
 - Editar el archivo de configuracion `vim /home/nextcloud/.env` con los valores que se quieran usar
 - Se debe habilitar la comunicación entre contenedores en el firewall con `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=<SUBNET> accept'`, luego reiniciar el firewall y docker con `systemctl restart firewalld && systemctl restart docker`.
-- Ingresar a la carpeta `cd /home/nextcloud` y levantar los servicios con `docker-compose up -d --build`
+- Ingresar a la carpeta `cd /home/nextcloud` y levantar los servicios con `docker-compose up -d`
+
+## Configuración por defecto
+Una vez que Nextcloud esté instalado se puede ejecutar el comando `docerk-compose exec nextcloud setup` para ejecutar la configuración por defecto que se le da a nextcloud, la cual incluye:
+- Correciones a la base de datos
+- Correcieones a las solicitudes web para que se cargue correctamente la página y se logeen correctamente las IPs de los visitantes
+- Setear el *locale* por defecto: es_CL
+- Crear la carpeta *Base* del usuario admin para que sea usada de base para los nuevos usuarios. Por defecto viene vacía.
+- Hacer que el cron se ejecute periódicamente y no con las visitas de la página
+- Luego si la API de las apps está disponible:
+  - Instalar/actualizar y configurar el <DOCUMENT EDITOR> a usar
+  - Instalar/actualizar y configurar el antivirus
+  - Instalar/actualizar las apps por defecto definidas en el archivo `.env`
+  - Limitar el uso solo para admin de las apps definidas en el archivo `.env`
+  
+Cada vez que se ejecuta este comando se ejecutan todas estas tareas por lo que se sobreescribirán los cambios hechos manualmente si es necesario. En caso de tener una ap pdeshabilitada, este comando la actualizará pero no la habilitará.
 
 ## Cambiar parámetros
-Si se cambia algun parámetro del archivo `.env` es necesario reconstruir los contenedores con el comando `docker-compose up -d --force-recreate --build <SERVICIO A REINICIAR>`, si no se especifica un `<SERVICIO A REINICIAR>` se reiniciarán todos.
+Si se cambia algun parámetro del archivo `.env` es necesario reconstruir los contenedores con el comando `docker-compose up -d --force-recreate <SERVICIO A REINICIAR>`, si no se especifica un `<SERVICIO A REINICIAR>` se reiniciarán todos.
 
 ## Actualización
-Primero se debe traer la última versión de los archivos de este repositorio con `git pull`. Luego se debe ejecutar el comando `docker-compose pull --ignore-pull-failures && docker-compose up -d --build`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
+Primero se debe traer la última versión de los archivos de este repositorio con `git pull`. Luego se debe ejecutar el comando `docker-compose pull && docker-compose up -d`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
 
 Luego de la actualización se recomienda entrar a `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/admin/overview` y revisar si la actualización fue realizada correctamente y si hay más acciones que se deben realizar.
 
