@@ -9,7 +9,7 @@ install_update_app() {
 }
 
 # Check if Nextcloud is installed
-(run_occ 'status' | head -n1 | grep -q true) || (echo "Nextcloud is not installed yet" && exit 1)
+run_occ 'status' | head -n1 | grep -q true || {echo "Nextcloud is not installed yet"; exit 1;}
 
 # Needed config
 run_occ 'db:convert-filecache-bigint -n'
@@ -29,7 +29,7 @@ run_occ 'files:scan --path="/admin/files"'
 run_occ "config:system:set skeletondirectory --value=$BASE_FOLDER"
 
 # Check if apps API is available
-curl -sf -m10 https://apps.nextcloud.com/api > /dev/null || (echo "Apps API not available" && exit 2)
+curl -sf -m10 https://apps.nextcloud.com/api > /dev/null || {echo "Apps API not available"; exit 2;}
 
 # Install selected document editor
 if [ "$DOCUMENT_EDITOR" == "collabora" ];then
