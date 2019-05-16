@@ -29,7 +29,7 @@ run_occ 'files:scan --path="/admin/files"'
 run_occ "config:system:set skeletondirectory --value=$BASE_FOLDER"
 
 # Check if apps API is available
-curl -sf -m10 https://apps.nextcloud.com/api > /dev/null || { echo "Apps API not available"; exit 2; }
+curl -sf -m10 https://apps.nextcloud.com > /dev/null || { echo "Apps API not available"; exit 2; }
 
 # Install selected document editor
 if [ "$DOCUMENT_EDITOR" == "collabora" ];then
