@@ -1,7 +1,7 @@
 version: '3' 
 
 services:
-    document_editor:
+    document-editor:
         image: collabora/code
         container_name: collabora
         depends_on:

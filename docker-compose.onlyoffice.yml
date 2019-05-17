@@ -1,7 +1,7 @@
 version: '3' 
 
 services:
-    document_editor:
+    document-editor:
         image: onlyoffice/documentserver:latest
         container_name: onlyoffice
         stdin_open: true

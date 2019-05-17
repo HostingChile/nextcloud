@@ -115,7 +115,7 @@ services:
         restart: unless-stopped
         
     # This is for throwing a message if no document editor is selected
-    document_editor:
+    document-editor:
         environment:
             - VIRTUAL_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
             - LETSENCRYPT_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
