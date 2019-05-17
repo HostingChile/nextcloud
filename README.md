@@ -68,7 +68,7 @@ Se se usa el archivo `docker-compose.mail.yml`, se ejecutará un contenedor con 
   
 ## Usar certificado propio
 - Eliminar la variables de entorno `LETSENCRYPT_*` del archivo .
-- Copiar en `/var/lib/docker/volumes/nextcloud_proxy-certs/_data/` los archivos .crt y .key que componen el certificado. El nombre de estos archivos debe ser exactamente igual al nombre del `VIRTUAL_HOST` del servicio, terminado con .crt y .key
+- Copiar en `/home/nextcloud/data/proxy/certs/` los archivos .crt y .key que componen el certificado. El nombre de estos archivos debe ser exactamente igual al nombre del `VIRTUAL_HOST` del servicio, terminado con .crt y .key
 
 Con esto el contendor proxy generará el virtualhost correspondiente para que use el certificado.
 
