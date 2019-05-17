@@ -97,3 +97,5 @@ Alguno de los servicios aún no arranca, hay que esperar unos 2 ~ 5 minutos. En 
 3. Las imágenes de Docker se descargan muy lento. Es probable que sea un límite impuesto por la red por lo cual debe contactarse con el administrador de red.
 4. Al ejecutar un comando de `docker-compose` dice *ERROR: The Compose file is invalid because: Service document_editor has neither an image nor a build context specified. At least one must be provided.*
 No se ha espcificado que editor de documentos usar. Para esto hay que definirlo en la variable `COMPOSE_FILE` (como dice más arriba) o usando `docker compose -f docker-compose.yml -f docker-compose.<DOCUMENT_EDITOR>.yml`.
+5. No se logra la comunicación entre los contenedores. El ping o curl tira *no route to host*
+No se ha agregado <SUBNET> al firewall. Ver instalación.
