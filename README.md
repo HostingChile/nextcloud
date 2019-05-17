@@ -22,7 +22,7 @@
 - Ingresar a la carpeta `cd /home/nextcloud` y levantar los servicios con `docker-compose up -d`
 
 ## Configuración por defecto
-Una vez que Nextcloud esté instalado se puede ejecutar el comando `docerk-compose exec nextcloud setup` para ejecutar la configuración por defecto que se le da a nextcloud, la cual incluye:
+Una vez que Nextcloud esté instalado se puede ejecutar el comando `docker-compose exec nextcloud setup` para ejecutar la configuración por defecto que se le da a nextcloud, la cual incluye:
 - Correciones a la base de datos
 - Correcieones a las solicitudes web para que se cargue correctamente la página y se logeen correctamente las IPs de los visitantes
 - Setear el *locale* por defecto: es_CL
@@ -49,7 +49,7 @@ Luego de la actualización se recomienda entrar a `https://<NEXTCLOUD_SUBDOMAIN>
 ## Restaurar respaldo
 Hay que restaurar:
 - Archivos de Nextcloud, incluyendo configuración, apps y archivos respaldados.
-  Se deben copiar los archivos, confirmar que el dueño de los archivos tiene UID 33.
+  Se deben copiar los archivos, confirmar que el dueño de los archivos tiene UID 33 ejcutando `chown -R 33 data/nextcloud/`.
 - Base de datos
   Se usa el contenedor *databse-backup* para esto:
   - Ver qué respaldos hay disponibles con `docker-compose exec database-backup ls /backup`
@@ -68,7 +68,7 @@ Se se usa el archivo `docker-compose.mail.yml`, se ejecutará un contenedor con 
   
 ## Usar certificado propio
 - Eliminar la variables de entorno `LETSENCRYPT_*` del archivo .
-- Copiar en `/var/lib/docker/volumes/nextcloud_proxy-certs/_data/` los archivos .crt y .key que componen el certificado. El nombre de estos archivos debe ser exactamente igual al nombre del `VIRTUAL_HOST` del servicio, terminado con .crt y .key
+- Copiar en `/home/nextcloud/data/proxy/certs/` los archivos .crt y .key que componen el certificado. El nombre de estos archivos debe ser exactamente igual al nombre del `VIRTUAL_HOST` del servicio, terminado con .crt y .key
 
 Con esto el contendor proxy generará el virtualhost correspondiente para que use el certificado.
 
@@ -97,3 +97,5 @@ Alguno de los servicios aún no arranca, hay que esperar unos 2 ~ 5 minutos. En 
 3. Las imágenes de Docker se descargan muy lento. Es probable que sea un límite impuesto por la red por lo cual debe contactarse con el administrador de red.
 4. Al ejecutar un comando de `docker-compose` dice *ERROR: The Compose file is invalid because: Service document_editor has neither an image nor a build context specified. At least one must be provided.*
 No se ha espcificado que editor de documentos usar. Para esto hay que definirlo en la variable `COMPOSE_FILE` (como dice más arriba) o usando `docker compose -f docker-compose.yml -f docker-compose.<DOCUMENT_EDITOR>.yml`.
+5. No se logra la comunicación entre los contenedores. El ping o curl tira *no route to host*
+No se ha agregado <SUBNET> al firewall. Ver instalación.
