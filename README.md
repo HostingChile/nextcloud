@@ -22,7 +22,7 @@
 - Ingresar a la carpeta `cd /home/nextcloud` y levantar los servicios con `docker-compose up -d`
 
 ## Configuración por defecto
-Una vez que Nextcloud esté instalado se puede ejecutar el comando `docerk-compose exec nextcloud setup` para ejecutar la configuración por defecto que se le da a nextcloud, la cual incluye:
+Una vez que Nextcloud esté instalado se puede ejecutar el comando `docker-compose exec nextcloud setup` para ejecutar la configuración por defecto que se le da a nextcloud, la cual incluye:
 - Correciones a la base de datos
 - Correcieones a las solicitudes web para que se cargue correctamente la página y se logeen correctamente las IPs de los visitantes
 - Setear el *locale* por defecto: es_CL
