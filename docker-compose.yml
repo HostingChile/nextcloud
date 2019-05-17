@@ -10,10 +10,10 @@ services:
             - 80:80
             - 443:443
         volumes:
-            - proxy-conf:/etc/nginx/conf.d:rw
-            - proxy-vhost:/etc/nginx/vhost.d:rw
-            - proxy-html:/usr/share/nginx/html:rw
-            - proxy-certs:/etc/nginx/certs:ro
+            - proxy_conf:/etc/nginx/conf.d:rw
+            - proxy_vhost:/etc/nginx/vhost.d:rw
+            - proxy_html:/usr/share/nginx/html:rw
+            - ${PWD}/data/proxy/certs:/etc/nginx/certs:ro
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
             - ${PWD}/proxy/upload_limits.conf:/etc/nginx/conf.d/upload_limits.conf:ro
@@ -123,10 +123,9 @@ services:
         
 volumes:
     db:  
-    proxy-conf:
-    proxy-vhost:
-    proxy-html:
-    proxy-certs:
+    proxy_conf:
+    proxy_vhost:
+    proxy_html:
   
 networks:
     default:
