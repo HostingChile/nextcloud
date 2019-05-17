@@ -108,7 +108,7 @@ services:
         environment:
             - MYSQL_HOST=database
             - MYSQL_USER=${MYSQL_USER}
-            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_PASS=${MYSQL_PASSWORD}
             - MYSQLDUMP_OPTS=--single-transaction
             - MAX_BACKUPS=${MAX_BACKUPS}
             - CRON_TIME=${CRON}
