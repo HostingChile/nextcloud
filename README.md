@@ -46,6 +46,15 @@ Luego de la actualización se recomienda entrar a `https://<NEXTCLOUD_SUBDOMAIN>
 
 **Importante**: las actualziaciones pueden generar que algunas apps dejen de funcionar. Por defecto Nextcloud deshabilita algunas aplicaciones las cuales deben ser actualizadas y habilitadas manualmente en `https://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/settings/apps`
 
+## Restaurar respaldo
+Hay que restaurar:
+- Archivos de Nextcloud, incluyendo configuración, apps y archivos respaldados.
+  Se deben copiar los archivos, confirmar que el dueño de los archivos tiene UID 33.
+- Base de datos
+  Se usa el contenedor *databse-backup* para esto:
+  - Ver qué respaldos hay disponibles con `docker-compose exec database-backup ls /backup`
+  - Restaurar alguno con `docker-compose exec database-backup /restore.sh /backup/<DUMP A USAR>`. Si se quiere usaer el último disponible, se puede usar `docker-compose exec database-backup /restore.sh /backup/latest.nextcloud.sql.gz`.
+
 ## Collabora
 Para comprobar si está ejecutándose se puede ingresar a `https://<DOCUMENT_EDITOR_SUBDOMAIN>.<DOMAIN>`, debe mostrar el mensaje "ok".
 
