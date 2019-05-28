@@ -99,3 +99,5 @@ Alguno de los servicios aún no arranca, hay que esperar unos 2 ~ 5 minutos. En 
 No se ha espcificado que editor de documentos usar. Para esto hay que definirlo en la variable `COMPOSE_FILE` (como dice más arriba) o usando `docker compose -f docker-compose.yml -f docker-compose.<DOCUMENT_EDITOR>.yml`.
 5. No se logra la comunicación entre los contenedores. El ping o curl tira *no route to host*
 No se ha agregado <SUBNET> al firewall. Ver instalación.
+6. No se muestran las apps. Aparece un mensaje diciendo **"No apps found for your version"** y no muestra el botón par actualizar las apps.
+Revisar en los logs, poniendolo en nivel **Info** con *log:manage --level=debug* desde la app **OCC Web**. En caso de ser un tiemout puede significar que por la red se esta tardando demasiado en descargar el listado de apps (~3MB).  
