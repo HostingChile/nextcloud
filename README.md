@@ -87,17 +87,4 @@ location /sites/ {
 ```
   
 ## Errores comunes
-1. Al entrar al sitio aparece como no seguro. Luego al ver el certificado en el navegador dice emitido por y para *letsencrypt-nginx-proxy-companion*.
-  Esto ocurre porque el servicio que provee los ceritificados aun no lo ha emitido. Posibles razones:
-  - Aun esta trabajando en eso. Puede tardar unos 5 minutos.
-  - El subdominio <NEXTCLOUD_SUBDOMAIN>.<DOMAIN> aun no responde públicamente a la IP del servidor.
-  - Se ha alcanzado el límite de certificados gratuitos posibles para emitir por Let's Encrypt (https://letsencrypt.org/docs/rate-limits/). 
-2. **502 Bad Gateway**
-Alguno de los servicios aún no arranca, hay que esperar unos 2 ~ 5 minutos. En caso de persistir el problema se deben ver los logs con `docker-compose logs -f --tail=20`.
-3. Las imágenes de Docker se descargan muy lento. Es probable que sea un límite impuesto por la red por lo cual debe contactarse con el administrador de red.
-4. Al ejecutar un comando de `docker-compose` dice *ERROR: The Compose file is invalid because: Service document_editor has neither an image nor a build context specified. At least one must be provided.*
-No se ha espcificado que editor de documentos usar. Para esto hay que definirlo en la variable `COMPOSE_FILE` (como dice más arriba) o usando `docker compose -f docker-compose.yml -f docker-compose.<DOCUMENT_EDITOR>.yml`.
-5. No se logra la comunicación entre los contenedores. El ping o curl tira *no route to host*
-No se ha agregado <SUBNET> al firewall. Ver instalación.
-6. No se muestran las apps. Aparece un mensaje diciendo **"No apps found for your version"** y no muestra el botón par actualizar las apps.
-Revisar en los logs, poniendolo en nivel **Info** con *log:manage --level=debug* desde la app **OCC Web**. En caso de ser un tiemout puede significar que por la red se esta tardando demasiado en descargar el listado de apps (~3MB).  
+Los errores más comunes y su solución están en https://github.com/tikoflano/nextcloud/wiki
