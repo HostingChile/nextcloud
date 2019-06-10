@@ -23,8 +23,8 @@
 
 ## Configuración por defecto
 Una vez que Nextcloud esté instalado se puede ejecutar el comando `docker-compose exec nextcloud setup` para ejecutar la configuración por defecto que se le da a nextcloud, la cual incluye:
-- Correciones a la base de datos
-- Correcieones a las solicitudes web para que se cargue correctamente la página y se logeen correctamente las IPs de los visitantes
+- Correcciones a la base de datos
+- Correcciones a las solicitudes web para que se cargue correctamente la página y se logeen correctamente las IPs de los visitantes
 - Setear el *locale* por defecto: es_CL
 - Crear la carpeta *Base* del usuario admin para que sea usada de base para los nuevos usuarios. Por defecto viene vacía.
 - Hacer que el cron se ejecute periódicamente y no con las visitas de la página
