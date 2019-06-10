@@ -49,8 +49,10 @@ Luego de la actualización se recomienda entrar a `https://<NEXTCLOUD_SUBDOMAIN>
 ## Restaurar respaldo
 Hay que restaurar:
 - Archivos de Nextcloud, incluyendo configuración, apps y archivos respaldados.
+
   Se deben copiar los archivos, confirmar que el dueño de los archivos tiene UID 33 ejcutando `chown -R 33 data/nextcloud/`.
-- Base de datos
+- Base de datos.
+
   Se usa el contenedor *databse-backup* para esto:
   - Ver qué respaldos hay disponibles con `docker-compose exec database-backup ls /backup`
   - Restaurar alguno con `docker-compose exec database-backup /restore.sh /backup/<DUMP A USAR>`. Si se quiere usaer el último disponible, se puede usar `docker-compose exec database-backup /restore.sh /backup/latest.nextcloud.sql.gz`.
