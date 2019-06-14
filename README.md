@@ -87,6 +87,11 @@ location /sites/ {
   proxy_pass http://<NEXTCLOUD_SUBDOMAIN>.<DOMAIN>/;
 }
 ```
+
+## Ejecutar comandos OCC
+Para usar los comandos de Nextcloud CLI (comandos OCC) se debe ejcutar:
+
+`docker-compose exec --user www-data nextcloud php occ <COMMAND>`
   
 ## Errores comunes
 Los errores más comunes y su solución están en https://github.com/tikoflano/nextcloud/wiki
