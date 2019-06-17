@@ -106,7 +106,7 @@ Para agregar extensiones de archivos que puedan ser editadas en el editor integr
 ```
 Esto hará que los archivos terminados en `.ext` y `.ext2` sean abiertos por el editor.
 
-**Importante:** Este cambio afecta sólo a los archivos que sean subidos después del cambio.
+**Importante:** Este cambio afecta sólo a los archivos que sean subidos después del cambio. Para que afecte a los archivos que ya existian es necesario borrar estos archivos de la tabla *filecache* de la base de datos. Esto hará que los archivos ya no sean visualziados en Nextcloud, por lo que hay que volver a indexarlos con `docker-compose exec --user www-data nextcloud php occ files:scan <usuario>`. En caso de que afecte a más de un usario, se debe usar `docker-compose exec --user www-data nextcloud php occ files:scan --all`.
 
 ## Ejecutar comandos OCC
 Para usar los comandos de Nextcloud CLI (comandos OCC) se debe ejcutar:
