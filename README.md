@@ -93,6 +93,18 @@ location /sites/ {
 ## phpMyAdmin
 Si se agrega el archivo `dcoker-compose.phpmyadmin.yml` se puede acceder a phpMyAdmin desde la IP del servidor con el puerto 8080.
 
+## Agregar extensiones para editar en el navegador
+Para agregar extensiones de archivos que puedan ser editadas en el editor integrado (aplicación *Text editor (files_texteditor)*) se debe crear el archivo `vim/home/nextcloud/data/nextcloud/config/mimetypemapping.json` y agregar extensiones siguiendo el formato:
+
+```
+{
+  "ext": ["text/plain"]
+}
+```
+Esto hará que los archivos terminados en `.ext` sean abiertos por el editor.
+
+**Importante:** Este cambio afecta sólo a los archivos que sean subidos después del cambio.
+
 ## Ejecutar comandos OCC
 Para usar los comandos de Nextcloud CLI (comandos OCC) se debe ejcutar:
 
