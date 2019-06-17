@@ -39,6 +39,8 @@ Cada vez que se ejecuta este comando se ejecutan todas estas tareas por lo que s
 ## Cambiar parámetros
 Si se cambia algun parámetro del archivo `.env` es necesario reconstruir los contenedores con el comando `docker-compose up -d --force-recreate <SERVICIO A REINICIAR>`, si no se especifica un `<SERVICIO A REINICIAR>` se reiniciarán todos.
 
+En caso de cambiar el valor de `<SUBNET>` se debe eliminar manualmente la red actual. Para esto se deben parar los contenedores con `docker-sompose stop` y luego eliminar la red con `docker network rm nextcloud_default`. Luego al hacer `docker-compose up -d` se recreará la red en el nuevo rango definido en `<SUBNET>`.
+
 ## Actualización
 Primero se debe traer la última versión de los archivos de este repositorio con `git pull`. Luego se debe ejecutar el comando `docker-compose pull && docker-compose up -d`. Esto descargará las últimas imágenes y actualizará los contenedores. Como la información se encuentra en volúmenes, no se pierde nada. Luego se puede ejecutar el comando `docker system prune -af` para eliminar las imágenes antiguas y liberar espacio en el disco.
 
