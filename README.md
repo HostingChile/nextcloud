@@ -100,10 +100,11 @@ Para agregar extensiones de archivos que puedan ser editadas en el editor integr
 
 ```
 {
-  "ext": ["text/plain"]
+  "ext": ["text/plain"],
+  "ext2": ["text/plain"]
 }
 ```
-Esto hará que los archivos terminados en `.ext` sean abiertos por el editor.
+Esto hará que los archivos terminados en `.ext` y `.ext2` sean abiertos por el editor.
 
 **Importante:** Este cambio afecta sólo a los archivos que sean subidos después del cambio.
 
