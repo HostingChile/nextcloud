@@ -90,6 +90,9 @@ location /sites/ {
 }
 ```
 
+## phpMyAdmin
+Si se agrega el archivo `dcoker-compose.phpmyadmin.yml` se puede acceder a phpMyAdmin desde la IP del servidor con el puerto 8080.
+
 ## Ejecutar comandos OCC
 Para usar los comandos de Nextcloud CLI (comandos OCC) se debe ejcutar:
 
