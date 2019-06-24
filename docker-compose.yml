@@ -40,7 +40,6 @@ services:
             - letsencrypt
             - database
             - redis
-            - antivirus
         volumes:
             - ${PWD}/data/nextcloud:/var/www/html
             - /etc/localtime:/etc/localtime:ro
@@ -90,11 +89,6 @@ services:
         depends_on:
             - database
             - redis
-        restart: unless-stopped
-        
-    antivirus:
-        image: mkodockx/docker-clamav:latest
-        container_name: antivirus
         restart: unless-stopped
         
     database-backup:
