@@ -17,7 +17,7 @@ services:
         ports:
             - 8081:80
         depends_on:
-            - database
+            - dbrestore
         environment:
             - PMA_HOST=dbrestore
         restart: unless-stopped
