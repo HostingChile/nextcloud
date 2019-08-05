@@ -1,0 +1,19 @@
+version: '3' 
+
+services:
+    database-backup:
+        image: fradelg/mysql-cron-backup
+        container_name: database-backup
+        depends_on:
+            - database
+        volumes:
+            - ./data/db_backup:/backup
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - MYSQL_HOST=database
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASS=${MYSQL_PASSWORD}
+            - MYSQLDUMP_OPTS=--single-transaction
+            - MAX_BACKUPS=${MAX_BACKUPS}
+            - CRON_TIME=${CRON}
+        restart: unless-stopped
