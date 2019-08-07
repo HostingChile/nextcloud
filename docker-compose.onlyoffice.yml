@@ -10,6 +10,8 @@ services:
             - proxy
             - letsencrypt
         volumes:
+            - ./data/onlyoffice/cache:/var/lib/onlyoffice/documentserver/App_Data/cache
+            - ./data/onlyoffice/postgresql:/var/lib/postgresql
             - /etc/localtime:/etc/localtime:ro
         environment:
             - VIRTUAL_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
