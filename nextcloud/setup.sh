@@ -18,6 +18,7 @@ run_occ 'config:system:set overwriteprotocol --value=https'
 run_occ 'config:system:set forwarded_for_headers 0 --value=HTTP_X_FORWARDED_FOR'
 run_occ 'config:system:set trusted_proxies 0 --value="$(hostname -i | cut -d. -f1-3).1"'
 run_occ 'config:system:set default_locale --value=es_CL'
+run_occ 'maintenance:update:htaccess'
 
 # Set base structure for new users
 BASE_FOLDER="/var/www/html/data/admin/files/Base"
