@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  openldap:
+    image: osixia/openldap
+    container_name: ldap
+    command: --copy-service
+    volumes:
+      - ./data/ldap/config:/etc/ldap/slapd.d
+      - ./data/ldap/database:/var/lib/ldap
+    restart: unless-stopped
+
+  phpldapadmin:
+    image: osixia/phpldapadmin
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: openldap
+    depends_on:
+      - openldap
+    ports:
+      - 6443:443
+    restart: unless-stopped
