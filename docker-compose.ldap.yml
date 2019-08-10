@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  openldap:
+  ldap:
     image: osixia/openldap
     container_name: ldap
     command: --copy-service
@@ -14,9 +14,13 @@ services:
     image: osixia/phpldapadmin
     container_name: phpldapadmin
     environment:
-      PHPLDAPADMIN_LDAP_HOSTS: openldap
+      PHPLDAPADMIN_LDAP_HOSTS: ldap
     depends_on:
-      - openldap
+      - ldap
     ports:
       - 6443:443
+    environment:
+      - VIRTUAL_HOST=${LDAP_SUBDOMAIN}.${DOMAIN}
+      - LETSENCRYPT_HOST=${LDAP_SUBDOMAIN}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
     restart: unless-stopped
