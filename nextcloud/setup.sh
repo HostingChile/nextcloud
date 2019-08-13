@@ -11,7 +11,7 @@ install_update_app() {
 # Check if Nextcloud is installed
 run_occ 'status' | head -n1 | grep -q true || { echo "Nextcloud is not installed yet"; exit 1; }
 
-# Needed config
+# System config
 run_occ 'db:convert-filecache-bigint -n'
 run_occ 'background:cron'
 run_occ 'config:system:set overwriteprotocol --value=https'
@@ -66,3 +66,9 @@ done;
 for APP in ${DEFAULT_ADMIN_APPS//,/ };do
     run_occ "app:enable $APP -g admin"
 done;
+
+# Apps config
+run_occ "config:app:set files_sharing incoming_server2server_share_enabled --value=no"
+run_occ "config:app:set files_sharing lookupServerEnabled --value=no"
+run_occ "config:app:set files_sharing lookupServerUploadEnabled --value=no"
+run_occ "config:app:set files_sharing outgoing_server2server_share_enabled --value=no"
