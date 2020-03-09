@@ -41,10 +41,7 @@ services:
             - database
             - redis
         volumes:
-            - ./data/nextcloud/config:/var/www/html/config
-            - ./data/nextcloud/custom_apps:/var/www/html/custom_apps
-            - ./data/nextcloud/data:/var/www/html/data
-            - ./data/nextcloud/themes:/var/www/html/themes
+            - ./data/nextcloud/www:/var/www/html
             - /etc/localtime:/etc/localtime:ro
             - ./nextcloud/setup.sh:/usr/local/bin/setup
         environment:
