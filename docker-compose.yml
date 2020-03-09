@@ -59,6 +59,11 @@ services:
             - DEFAULT_APPS=${DEFAULT_APPS}
             - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
             - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
+            - ONLYOFFICE_URL=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
+            - NEXTCLOUD_UPDATE=1
+            - SKIP_INITIAL_SETUP=0
+            - LDAP_ENABLED=yes
+            - NEXTCLOUD_TABLE_PREFIX=
         command: /setup.sh apache2-foreground
         restart: unless-stopped
         
