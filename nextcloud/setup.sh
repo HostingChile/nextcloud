@@ -57,8 +57,7 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 	run_occ "config:app:set files_antivirus av_port --value=3310"
 
 	# Default apps install and update
-        DEFAULT_APPS="announcementcenter,apporder,calendar,checksum,contacts,drawio,extract,files_accesscontrol,files_automatedtagging,files_downloadactivity,files_mindmap,files_retention,files_trackdownloads,groupfolders,guests,ldap_write_support,quickaccesssorting,tasks"
-	for APP in ${DEFAULT_APPS//,/ };do
+        for APP in ${DEFAULT_APPS//,/ };do
 		install_update_app "$APP"
 	done;
 
@@ -66,44 +65,6 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 	run_occ "config:app:set files_sharing lookupServerEnabled --value=no"
 	run_occ "config:app:set files_sharing lookupServerUploadEnabled --value=no"
 	run_occ "config:app:set files_sharing outgoing_server2server_share_enabled --value=no"
-		
-	if [ "$LDAP_ENABLED" == "yes" ];then
-		echo "LDAP setup started"
-
-		run_occ "app:enable user_ldap"
-
-		run_occ "ldap:create-empty-config"
-
-		run_occ "ldap:set-config s01 ldapHost ldap"
-		run_occ "ldap:set-config s01 ldapPort 389"
-
-		run_occ "ldap:set-config s01 ldapAgentName cn=admin,${LDAP_BASE_DN}"
-		run_occ "ldap:set-config s01 ldapAgentPassword '${LDAP_PASSWORD}'"
-
-		run_occ "ldap:set-config s01 ldapBase ${LDAP_BASE_DN}"
-		run_occ "ldap:set-config s01 ldapBaseGroups ou=Groups,${LDAP_BASE_DN}"
-		run_occ "ldap:set-config s01 ldapBaseUsers ou=Users,${LDAP_BASE_DN}"
-
-		run_occ "ldap:set-config s01 ldapExpertUsernameAttr cn"
-
-		run_occ "ldap:set-config s01 ldapGroupDisplayName cn"
-		run_occ "ldap:set-config s01 ldapGroupFilter '(&(objectclass=groupOfNames))'"
-		run_occ "ldap:set-config s01 ldapGroupFilterMode 1"
-
-		run_occ "ldap:set-config s01 ldapLoginFilter '(&(cn=%uid))'"
-		run_occ "ldap:set-config s01 ldapLoginFilterMode 1"
-
-		run_occ "ldap:set-config s01 ldapUserDisplayName displayName"
-		run_occ "ldap:set-config s01 ldapUserFilter '(&(objectClass=hSuiteUser))'"
-		run_occ "ldap:set-config s01 ldapUserFilterMode 1"
-
-		run_occ "ldap:set-config s01 turnOnPasswordChange 1"
-		run_occ "ldap:set-config s01 ldapQuotaAttribute quota"
-		
-		run_occ "ldap:set-config s01 ldapConfigurationActive 1"
-
-		echo "LDAP setup finished"
-	fi
 
 	echo "Initial setup finished" && run_occ "config:system:set inital_setup_completed --value=yes"
 else
