@@ -43,7 +43,7 @@ services:
         volumes:
             - ./data/nextcloud/www:/var/www/html
             - /etc/localtime:/etc/localtime:ro
-            - ./nextcloud/setup.sh:/usr/local/bin/setup
+            - ./nextcloud/setup.sh:/setup.sh
         environment:
             - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
             - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
@@ -59,6 +59,7 @@ services:
             - DEFAULT_APPS=${DEFAULT_APPS}
             - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
             - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
+        command: /setup.sh apache2-foreground
         restart: unless-stopped
         
     letsencrypt:
