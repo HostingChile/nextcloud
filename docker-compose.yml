@@ -33,7 +33,7 @@ services:
         restart: unless-stopped
   
     nextcloud:
-        image: nextcloud:latest
+        image: nextcloud:17
         container_name: nextcloud
         depends_on:
             - proxy
