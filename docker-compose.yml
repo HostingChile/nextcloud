@@ -1,110 +1,156 @@
-version: '3' 
+version: "3"
 
 services:
-    proxy:
-        image: jwilder/nginx-proxy:alpine
-        container_name: proxy
-        labels:
-            - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
-        ports:
-            - 80:80
-            - 443:443
-        volumes:
-            - proxy_conf:/etc/nginx/conf.d:rw
-            - proxy_vhost:/etc/nginx/vhost.d:rw
-            - proxy_html:/usr/share/nginx/html:rw
-            - ./data/proxy/certs:/etc/nginx/certs:ro
-            - /etc/localtime:/etc/localtime:ro
-            - /var/run/docker.sock:/tmp/docker.sock:ro
-            - ./proxy/upload_limits.conf:/etc/nginx/conf.d/upload_limits.conf:ro
-        restart: unless-stopped
-  
-    database:
-        image: mariadb
-        container_name: database
-        volumes:
-            - ./data/database:/var/lib/mysql
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-            - MYSQL_DATABASE=${MYSQL_DATABASE}
-            - MYSQL_USER=${MYSQL_USER}
-            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        restart: unless-stopped
-  
-    nextcloud:
-        image: nextcloud:18
-        container_name: nextcloud
-        depends_on:
-            - proxy
-            - letsencrypt
-            - database
-            - redis
-        volumes:
-            - ./data/nextcloud/www:/var/www/html
-            - /etc/localtime:/etc/localtime:ro
-            - ./nextcloud/setup.sh:/setup.sh
-        environment:
-            - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
-            - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
-            - MYSQL_DATABASE=${MYSQL_DATABASE}
-            - MYSQL_USER=${MYSQL_USER}
-            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-            - MYSQL_HOST=database
-            - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-            - REDIS_HOST=redis
-            - VIRTUAL_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-            - LETSENCRYPT_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-            - LETSENCRYPT_EMAIL=${EMAIL}
-            - DEFAULT_APPS=${DEFAULT_APPS}
-            - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
-            - DOCUMENT_EDITOR_HOST=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
-            - ONLYOFFICE_URL=${DOCUMENT_EDITOR_SUBDOMAIN}.${DOMAIN}
-            - NEXTCLOUD_UPDATE=1
-            - SKIP_INITIAL_SETUP=0
-            - NEXTCLOUD_TABLE_PREFIX=
-        command: /setup.sh apache2-foreground
-        restart: unless-stopped
-        
-    letsencrypt:
-        image: jrcs/letsencrypt-nginx-proxy-companion
-        container_name: letsencrypt
-        depends_on:
-            - proxy
-        volumes:
-            - ./data/proxy/certs:/etc/nginx/certs:rw
-            - proxy_vhost:/etc/nginx/vhost.d:rw
-            - proxy_html:/usr/share/nginx/html:rw
-            - /etc/localtime:/etc/localtime:ro
-            - /var/run/docker.sock:/var/run/docker.sock:ro
-        restart: unless-stopped
-        
-    redis:
-        image: redis:alpine
-        container_name: redis
-        restart: unless-stopped
-        
-    cron:
-        image: rcdailey/nextcloud-cronjob:latest
-        container_name: cron
-        depends_on:
-            - nextcloud
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - NEXTCLOUD_CONTAINER_NAME=nextcloud
-        network_mode: none
-        restart: unless-stopped
-        
+  proxy:
+    image: jwilder/nginx-proxy:alpine
+    container_name: proxy
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - proxy_conf:/etc/nginx/conf.d:rw
+      - proxy_vhost:/etc/nginx/vhost.d:rw
+      - proxy_html:/usr/share/nginx/html:rw
+      - proxy_certs:/etc/nginx/certs:ro
+      - ./proxy/upload_limits.conf:/etc/nginx/conf.d/upload_limits.conf:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+
+  database:
+    image: mariadb
+    container_name: database
+    volumes:
+      - database_data:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: unless-stopped
+
+  nextcloud:
+    image: nextcloud:18
+    container_name: nextcloud
+    depends_on:
+      - proxy
+      - letsencrypt
+      - database
+      - redis
+      - antivirus
+      - onlyoffice
+    volumes:
+      - nextcloud_www:/var/www/html
+      - ./nextcloud/setup.sh:/setup.sh
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=database
+      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+      - REDIS_HOST=redis
+      - VIRTUAL_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+      - LETSENCRYPT_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
+      - DEFAULT_APPS=${DEFAULT_APPS}
+      - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
+      - ONLYOFFICE_URL=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
+      - NEXTCLOUD_UPDATE=1
+      - SKIP_INITIAL_SETUP=0
+      - NEXTCLOUD_TABLE_PREFIX=
+      - SMTP_HOST=mail
+      - MAIL_FROM_ADDRESS=admin
+      - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+    command: /setup.sh apache2-foreground
+    restart: unless-stopped
+
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice
+    stdin_open: true
+    tty: true
+    depends_on:
+      - proxy
+      - letsencrypt
+    volumes:
+      - onlyoffice_cache:/var/lib/onlyoffice/documentserver/App_Data/cache
+      - onlyoffice_database:/var/lib/postgresql
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - VIRTUAL_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
+      - LETSENCRYPT_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
+    restart: unless-stopped
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
+    depends_on:
+      - proxy
+    volumes:
+      - proxy_certs:/etc/nginx/certs:rw
+      - proxy_vhost:/etc/nginx/vhost.d:rw
+      - proxy_html:/usr/share/nginx/html:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+
+  mail:
+    image: elsdoerfer/exim-sender
+    container_name: mail
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - ALLOWED_HOSTS=${SUBNET}
+      - PRIMARY_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+
+  antivirus:
+    image: mkodockx/docker-clamav:latest
+    container_name: antivirus
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+
+  cron:
+    image: rcdailey/nextcloud-cronjob:latest
+    container_name: cron
+    depends_on:
+      - nextcloud
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - NEXTCLOUD_CONTAINER_NAME=nextcloud
+    network_mode: none
+    restart: unless-stopped
+
 volumes:
-    proxy_conf:
-    proxy_vhost:
-    proxy_html:
-  
+  proxy_conf:
+  proxy_vhost:
+  proxy_html:
+  proxy_certs:
+  database_data:
+  nextcloud_www:
+  onlyoffice_cache:
+  onlyoffice_database:
+
 networks:
-    default:
-        ipam:
-            driver: default
-            config:
-                - subnet: ${SUBNET}
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${SUBNET}
