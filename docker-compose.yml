@@ -76,7 +76,6 @@ services:
     tty: true
     depends_on:
       - traefik
-      - letsencrypt
     labels:
       - "traefik.enable=true"
       - "traefik.backend=onlyoffice"
