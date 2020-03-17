@@ -79,8 +79,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.backend=onlyoffice"
-      - "traefik.frontend.rule=Host:${SUBDOMAIN}.${DOMAIN};PathPrefixStrip:/onlyoffice"
-      - "traefik.frontend.headers.customRequestHeaders=X-Forwarded-Host:${SUBDOMAIN}.${DOMAIN}/onlyoffice"
+      - "traefik.frontend.rule=Host:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN};PathPrefixStrip:/onlyoffice"
+      - "traefik.frontend.headers.customRequestHeaders=X-Forwarded-Host:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/onlyoffice"
     volumes:
       - onlyoffice_cache:/var/lib/onlyoffice/documentserver/App_Data/cache
       - onlyoffice_database:/var/lib/postgresql
