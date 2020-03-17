@@ -1,22 +1,59 @@
 version: "3"
 
 services:
-  proxy:
-    image: jwilder/nginx-proxy:alpine
-    container_name: proxy
-    labels:
-      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+  traefik:
+    image: traefik:alpine
+    container_name: traefik
     ports:
       - 80:80
       - 443:443
     volumes:
-      - proxy_conf:/etc/nginx/conf.d:rw
-      - proxy_vhost:/etc/nginx/vhost.d:rw
-      - proxy_html:/usr/share/nginx/html:rw
-      - proxy_certs:/etc/nginx/certs:ro
-      - ./proxy/upload_limits.conf:/etc/nginx/conf.d/upload_limits.conf:ro
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./traefik/traefik.toml:/traefik.toml
+      - traefik_certificates:/etc/traefik/acme
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --docker.domain=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN} --acme.email=${EMAIL}
+    restart: unless-stopped
+        
+  nextcloud:
+    image: nextcloud:18
+    container_name: nextcloud
+    depends_on:
+      - traefik
+      - database
+      - redis
+      - antivirus
+      - onlyoffice
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=nextcloud"
+      - "traefik.frontend.rule=Host:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}"
+      - "traefik.frontend.redirect.permanent=true"
+      - "traefik.frontend.redirect.regex=https://:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/.well-known/(card|cal)dav"
+      - "traefik.frontend.redirect.replacement=https://:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/remote.php/dav/"
+      - "traefik.frontend.headers.customResponseHeaders=Strict-Transport-Security:max-age=15552000; includeSubDomains; preload"
+    volumes:
+      - nextcloud_www:/var/www/html
+      - ./nextcloud/setup.sh:/setup.sh
       - /etc/localtime:/etc/localtime:ro
+    environment:
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=database
+      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+      - REDIS_HOST=redis
+      - DEFAULT_APPS=${DEFAULT_APPS}
+      - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
+      - ONLYOFFICE_URL=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/onlyoffice
+      - NEXTCLOUD_UPDATE=1
+      - SKIP_INITIAL_SETUP=0
+      - NEXTCLOUD_TABLE_PREFIX=
+      - SMTP_HOST=mail
+      - MAIL_FROM_ADDRESS=admin@${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+      - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+    command: /setup.sh apache2-foreground
     restart: unless-stopped
 
   database:
@@ -32,72 +69,22 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     restart: unless-stopped
 
-  nextcloud:
-    image: nextcloud:18
-    container_name: nextcloud
-    depends_on:
-      - proxy
-      - letsencrypt
-      - database
-      - redis
-      - antivirus
-      - onlyoffice
-    volumes:
-      - nextcloud_www:/var/www/html
-      - ./nextcloud/setup.sh:/setup.sh
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
-      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_HOST=database
-      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-      - REDIS_HOST=redis
-      - VIRTUAL_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-      - LETSENCRYPT_HOST=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-      - LETSENCRYPT_EMAIL=${EMAIL}
-      - DEFAULT_APPS=${DEFAULT_APPS}
-      - DEFAULT_ADMIN_APPS=${DEFAULT_ADMIN_APPS}
-      - ONLYOFFICE_URL=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
-      - NEXTCLOUD_UPDATE=1
-      - SKIP_INITIAL_SETUP=0
-      - NEXTCLOUD_TABLE_PREFIX=
-      - SMTP_HOST=mail
-      - MAIL_FROM_ADDRESS=admin
-      - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
-    command: /setup.sh apache2-foreground
-    restart: unless-stopped
-
   onlyoffice:
     image: onlyoffice/documentserver:latest
     container_name: onlyoffice
     stdin_open: true
     tty: true
     depends_on:
-      - proxy
+      - traefik
       - letsencrypt
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=onlyoffice"
+      - "traefik.frontend.rule=Host:${SUBDOMAIN}.${DOMAIN};PathPrefixStrip:/onlyoffice"
+      - "traefik.frontend.headers.customRequestHeaders=X-Forwarded-Host:${SUBDOMAIN}.${DOMAIN}/onlyoffice"
     volumes:
       - onlyoffice_cache:/var/lib/onlyoffice/documentserver/App_Data/cache
       - onlyoffice_database:/var/lib/postgresql
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      - VIRTUAL_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
-      - LETSENCRYPT_HOST=${ONLYOFFICE_SUBDOMAIN}.${DOMAIN}
-      - LETSENCRYPT_EMAIL=${EMAIL}
-    restart: unless-stopped
-
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: letsencrypt
-    depends_on:
-      - proxy
-    volumes:
-      - proxy_certs:/etc/nginx/certs:rw
-      - proxy_vhost:/etc/nginx/vhost.d:rw
-      - proxy_html:/usr/share/nginx/html:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
 
@@ -139,9 +126,7 @@ services:
     restart: unless-stopped
 
 volumes:
-  proxy_conf:
-  proxy_vhost:
-  proxy_html:
+  traefik_certificates:
   proxy_certs:
   database_data:
   nextcloud_www:
