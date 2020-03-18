@@ -126,7 +126,6 @@ services:
 
 volumes:
   traefik_certificates:
-  proxy_certs:
   database_data:
   nextcloud_www:
   onlyoffice_cache:
