@@ -30,13 +30,13 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 	run_occ 'maintenance:update:htaccess'
 
 	# Set base structure for new users
-	BASE_FOLDER="/var/www/html/data/admin/files/Base"
+	BASE_FOLDER="/var/www/html/data/${NEXTCLOUD_ADMIN_USER}/files/Base"
 	if [ ! -d "$BASE_FOLDER" ];then
 		mkdir $BASE_FOLDER
 		chown www-data:www-data $BASE_FOLDER
 	fi
 	
-	run_occ 'files:scan --path="/admin/files"'
+	run_occ 'files:scan --path="/${NEXTCLOUD_ADMIN_USER}/files"'
 	run_occ "config:system:set skeletondirectory --value=$BASE_FOLDER"
 
 	# Check if apps API is available
