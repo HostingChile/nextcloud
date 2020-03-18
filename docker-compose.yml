@@ -28,8 +28,8 @@ services:
       - "traefik.backend=nextcloud"
       - "traefik.frontend.rule=Host:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}"
       - "traefik.frontend.redirect.permanent=true"
-      - "traefik.frontend.redirect.regex=https://:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/.well-known/(card|cal)dav"
-      - "traefik.frontend.redirect.replacement=https://:${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/remote.php/dav/"
+      - "traefik.frontend.redirect.regex=https://${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/.well-known/(card|cal)dav"
+      - "traefik.frontend.redirect.replacement=https://${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}/remote.php/dav/"
       - "traefik.frontend.headers.customResponseHeaders=Strict-Transport-Security:max-age=15552000; includeSubDomains; preload"
     volumes:
       - nextcloud_www:/var/www/html
