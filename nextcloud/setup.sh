@@ -57,8 +57,7 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 	run_occ "config:app:set files_antivirus av_port --value=3310"
 
 	# Default apps install and update
-  DEFAULT_APPS="announcementcenter,apporder,calendar,checksum,contacts,drawio,extract,files_accesscontrol,files_automatedtagging,files_downloadactivity,files_mindmap,files_retention,files_trackdownloads,groupfolders,guests,quickaccesssorting,tasks"
-	for APP in ${DEFAULT_APPS//,/ };do
+  for APP in ${DEFAULT_APPS//,/ };do
 		install_update_app "$APP"
 	done;
 
