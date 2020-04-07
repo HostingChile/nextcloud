@@ -6,7 +6,7 @@ run_occ() {
 }
 
 install_update_app() {
-  run_occ "app:install $1" || run_occ "app:update $1"
+  run_occ "app:install $1" || { run_occ "app:update $1";run_occ "app:enable $1"; }
 }
 
 if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital_setup_completed' | tail -n1)" == "yes" ]];then
