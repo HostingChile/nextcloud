@@ -51,7 +51,7 @@ services:
       - SKIP_INITIAL_SETUP=0
       - NEXTCLOUD_TABLE_PREFIX=
       - SMTP_HOST=mail
-      - MAIL_FROM_ADDRESS=admin@${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
+      - MAIL_FROM_ADDRESS=admin
       - MAIL_DOMAIN=${NEXTCLOUD_SUBDOMAIN}.${DOMAIN}
     command: /setup.sh apache2-foreground
     restart: unless-stopped
@@ -121,6 +121,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     environment:
       - NEXTCLOUD_CONTAINER_NAME=nextcloud
+      - NEXTCLOUD_CRON_MINUTE_INTERVAL=5
     network_mode: none
     restart: unless-stopped
 
