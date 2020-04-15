@@ -20,6 +20,7 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 	run_occ 'background:cron'
 	run_occ 'config:system:set forwarded_for_headers 0 --value=HTTP_X_FORWARDED_FOR'
 	run_occ 'config:system:set default_locale --value=es_CL'
+	run_occ 'db:add-missing-indices'
 
 	# Proxy config
 	run_occ 'config:system:set trusted_proxies 0 --value="$(hostname -i | cut -d. -f1-3).0/24"'
