@@ -58,7 +58,7 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 	run_occ "config:app:set files_antivirus av_port --value=3310"
 
 	# Default apps install and update
-  for APP in ${DEFAULT_APPS//,/ };do
+	for APP in ${DEFAULT_APPS//,/ };do
 		install_update_app "$APP"
 	done;
 
