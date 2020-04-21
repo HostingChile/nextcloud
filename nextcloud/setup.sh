@@ -66,6 +66,9 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 	run_occ "config:app:set files_sharing lookupServerEnabled --value=no"
 	run_occ "config:app:set files_sharing lookupServerUploadEnabled --value=no"
 	run_occ "config:app:set files_sharing outgoing_server2server_share_enabled --value=no"
+	
+	# Enable talk, there is an issue with NC 18 (https://github.com/nextcloud/spreed/issues/2806)
+	run_occ 'app:enable spreed'
 
 	echo "Initial setup finished" && run_occ "config:system:set inital_setup_completed --value=yes"
 else
