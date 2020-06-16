@@ -43,9 +43,9 @@ if [[ $SKIP_INITIAL_SETUP != "1" ]] && [[ ! "$(run_occ 'config:system:get inital
 
 	# Install OnlyOffice app
 	install_update_app "onlyoffice"
-	run_occ "config:app:set onlyoffice DocumentServerInternalUrl --value=https://${ONLYOFFICE_URL}/"
+	run_occ "config:app:set onlyoffice DocumentServerInternalUrl --value=http://onlyoffice/"
 	run_occ "config:app:set onlyoffice DocumentServerUrl --value=https://${ONLYOFFICE_URL}/"
-	run_occ "config:app:set onlyoffice StorageUrl --value=https://$NEXTCLOUD_TRUSTED_DOMAINS/"
+	run_occ "config:app:set onlyoffice StorageUrl --value=http://nextcloud/"
 	run_occ 'config:app:set onlyoffice defFormats --value={\"csv\":\"true\",\"doc\":\"true\",\"docm\":\"true\",\"docx\":\"true\",\"dotx\":\"true\",\"epub\":\"true\",\"html\":\"true\",\"odp\":\"true\",\"ods\":\"true\",\"odt\":\"true\",\"potm\":\"true\",\"potx\":\"true\",\"ppsm\":\"true\",\"ppsx\":\"true\",\"ppt\":\"true\",\"pptm\":\"true\",\"pptx\":\"true\",\"rtf\":\"true\",\"xls\":\"true\",\"xlsm\":\"true\",\"xlsx\":\"true\",\"xltm\":\"true\",\"xltx\":\"true\"}'
 	run_occ 'config:app:set onlyoffice editFormats --value={\"csv\":\"true\",\"odp\":\"true\",\"ods\":\"true\",\"odt\":\"true\",\"rtf\":\"true\"}'
 
